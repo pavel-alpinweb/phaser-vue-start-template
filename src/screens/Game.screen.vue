@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue"
-import Phaser from "phaser"
-import GameScene from "@/scenes/game.scene"
+import { onMounted, ref } from "vue";
+import Phaser from "phaser";
+import { GameScene } from "@/scenes/game.scene";
 
-const gameContainer = ref(null)
+const gameContainer = ref(null);
 
 onMounted(() => {
   new Phaser.Game({
@@ -13,8 +13,8 @@ onMounted(() => {
     parent: gameContainer.value,
     scene: new GameScene(),
     backgroundColor: "#000000",
-  })
-})
+  });
+});
 </script>
 
 <template>
@@ -23,4 +23,10 @@ onMounted(() => {
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.game-screen {
+  &__game-wrapper {
+    border: 1px solid grey;
+  }
+}
+</style>

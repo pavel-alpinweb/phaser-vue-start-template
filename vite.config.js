@@ -12,9 +12,6 @@ export default defineConfig({
     svgLoader(),
     checker({
       vueTsc: false,
-      eslint: {
-        lintCommand: 'eslint "./src/**/*.{js}"',
-      },
     }),
   ],
   resolve: {
