@@ -1,13 +1,26 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import path from 'path'
+import { defineConfig } from "vite"
+import vue from "@vitejs/plugin-vue"
+import checker from "vite-plugin-checker"
+import svgLoader from "vite-svg-loader"
+import path from "path"
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [vue()],
+  base: "./",
+  plugins: [
+    vue(),
+    svgLoader(),
+    checker({
+      vueTsc: false,
+      eslint: {
+        lintCommand: 'eslint "./src/**/*.{js}"',
+      },
+    }),
+  ],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      // eslint-disable-next-line
+      "@": path.resolve(__dirname, "./src"),
     },
   },
 })

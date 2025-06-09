@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import Phaser from 'phaser'
-import GameScene from '@/scenes/game.scene';
+import { onMounted, ref } from "vue"
+import Phaser from "phaser"
+import GameScene from "@/scenes/game.scene"
 
 const gameContainer = ref(null)
 
@@ -12,7 +12,7 @@ onMounted(() => {
     height: 540,
     parent: gameContainer.value,
     scene: new GameScene(),
-    backgroundColor: '#000000',
+    backgroundColor: "#000000",
   })
 })
 </script>
@@ -23,6 +23,4 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style lang="scss" scoped></style>
