@@ -1,9 +1,7 @@
-<script setup>
-import GameScreen from "@/screens/Game.screen.vue";
-</script>
+<script setup></script>
 
 <template>
-  <GameScreen></GameScreen>
+  <router-view />
 </template>
 
 <style lang="scss" scoped></style>
