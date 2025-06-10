@@ -2,6 +2,7 @@
 import { onMounted, ref } from "vue";
 import Phaser from "phaser";
 import { PlatformerScene } from "@/scenes/platformer.scene";
+import Preloader from "@/ui-components/Preloader.component.vue";
 
 const gameContainer = ref(null);
 
@@ -23,6 +24,7 @@ onMounted(() => {
 
 <template>
   <div class="platformer-screen">
+    <Preloader />
     <div ref="gameContainer" class="platformer-screen__game-wrapper"></div>
   </div>
 </template>

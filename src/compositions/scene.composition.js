@@ -1,11 +1,13 @@
+import { EventBus } from "@/utils/utils";
+
 export const sceneComposition = {
   preload(scene) {
     scene.load.on("progress", (value) => {
-      console.log("onProgress", value);
+      EventBus.emit("preloading-progress", value);
     });
 
     scene.load.on("complete", () => {
-      console.log("onComplete");
+      EventBus.emit("complete-progress", true);
     });
   },
 };
