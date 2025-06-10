@@ -5,7 +5,7 @@ const router = useRouter();
 
 const goToGame = (event) => {
   event.preventDefault();
-  router.push("/game");
+  router.push("/topdown");
 };
 </script>
 
