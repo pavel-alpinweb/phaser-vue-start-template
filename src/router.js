@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 
 import StartMenuScreen from "@/screens/StartMenu.screen.vue";
-import GameScreen from "@/screens/Game.screen.vue";
+import TopdownScreen from "@/screens/Topdown.screen.vue";
 import Platformer from "@/screens/Platformer.screen.vue";
 
 export const routes = [
@@ -10,8 +10,8 @@ export const routes = [
     component: StartMenuScreen,
   },
   {
-    path: "/game",
-    component: GameScreen,
+    path: "/topdown",
+    component: TopdownScreen,
   },
   {
     path: "/platformer",
