@@ -2,3 +2,8 @@
 export const PLAYER_SPEED = 200;
 export const PLAYER_JUMP_MULTIPLICATOR = 3
 export const PLAYER_FALL_MULTIPLICATOR = 0.7
+export const PLAYER_BODY_WIDTH = 100
+export const PLAYER_BODY_HEIGHT = 330
+export const PLAYER_DISPLAY_WIDTH = 100
+export const PLAYER_DISPLAY_HEIGHT = 100
+export const PLAYER_MAX_HEALTH = 20

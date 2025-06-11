@@ -2,6 +2,7 @@ import * as Phaser from "phaser";
 import { sceneComposition } from "@/compositions/scene.composition.js";
 import {playerComposition} from "@/compositions/Player.composition.js";
 import {PLAYER_SPEED} from "@/configs/gameplay.config.js";
+import * as Config from "@/configs/gameplay.config.js";
 
 export class PlatformerScene extends Phaser.Scene {
   constructor() {
@@ -20,7 +21,17 @@ export class PlatformerScene extends Phaser.Scene {
 
     this.userInput = playerComposition.createUserInput(this);
     playerComposition.preparePlayerAnimation(this);
-    this.player = playerComposition.createPlayer(this, this.cameras.main.width / 2, this.cameras.main.height / 2, 100, 100, PLAYER_SPEED, 20);
+    this.player = playerComposition.createPlayer(
+      this,
+      this.cameras.main.width / 2,
+      this.cameras.main.height / 2,
+      Config.PLAYER_DISPLAY_WIDTH,
+      Config.PLAYER_DISPLAY_HEIGHT,
+      Config.PLAYER_BODY_WIDTH,
+      Config.PLAYER_BODY_HEIGHT,
+      Config.PLAYER_SPEED,
+      Config.PLAYER_MAX_HEALTH
+    );
 
     this.physics.add.collider(this.player, this.platform);
   }
