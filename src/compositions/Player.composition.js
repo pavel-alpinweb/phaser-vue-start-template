@@ -29,10 +29,10 @@ export const playerComposition = {
     });
   },
 
-  createPlayer(scene, x, y, width, height, speed, maxHealth) {
-    const player = scene.physics.add.sprite(x, y, "player_wait", 0)
-      .setBodySize(100, 330)
-      .setDisplaySize(width, height)
+  createPlayer(scene, x, y, displayWidth, displayHeight, bodyWidth, bodyHeight, speed, maxHealth) {
+    const player = scene.physics.add.sprite(x, y, "player_wait", "0")
+      .setBodySize(bodyWidth, bodyHeight)
+      .setDisplaySize(displayWidth, displayHeight)
       .setOrigin(0.5, 1)
       .play("player_wait")
       .refreshBody();
@@ -41,6 +41,11 @@ export const playerComposition = {
     player.maxHealth = maxHealth;
     player.currentHealth = maxHealth;
     return player;
+  },
+
+  configureCameraFollow(scene, player, deadzoneWidth, deadzoneHeight) {
+    scene.cameras.main.startFollow(player);
+    scene.cameras.main.setDeadzone(deadzoneWidth, deadzoneHeight);
   },
 
   movePlayerOnTopDown(player, userInput) {
@@ -58,40 +63,22 @@ export const playerComposition = {
   },
 
   movePlayerOnPlatformers(player, userInput) {
-    if (userInput.up.isDown && player.body.blocked.down) {
-      // jump
-      player.anims.play("player_jump", true);
-      player.setVelocityY(-player.speed * PLAYER_JUMP_MULTIPLICATOR);
-    } else if (userInput.right.isDown && !player.body.blocked.down) {
-      // falling right
-      player.flipX = false;
-      player.anims.play("player_jump", true);
-      player.setVelocityX(player.speed * PLAYER_FALL_MULTIPLICATOR);
-    } else if (userInput.left.isDown && !player.body.blocked.down) {
-      // falling left
-      player.flipX = true;
-      player.anims.play("player_jump", true);
-      player.setVelocityX(-player.speed * PLAYER_FALL_MULTIPLICATOR);
-    } else if (!player.body.blocked.down) {
-      // falling down
-      player.anims.play("player_jump", true);
-      player.setVelocityX(0);
-    } else if (userInput.right.isDown) {
-      // move right
-      player.flipX = false;
-      player.setVelocityX(player.speed);
-      player.anims.play("player_move", true);
-    } else if (userInput.left.isDown) {
-      // move left
-      player.flipX = true;
-      player.setVelocityX(-player.speed);
+    if(userInput.up.isDown && player.body.blocked.down)
+      player.body.velocity.y = -player.speed * PLAYER_JUMP_MULTIPLICATOR;
+
+    player.body.velocity.x = (userInput.right.isDown - userInput.left.isDown) * player.speed;
+
+    if(player.body.velocity.equals(Phaser.Math.Vector2.ZERO)) {
+      player.anims.play("player_wait", true);
+    } else if(player.body.blocked.down && player.body.velocity.y === 0) {
       player.anims.play("player_move", true);
     } else {
-      // move stay
-      player.setVelocityX(0);
-      player.setVelocityX(0);
-      player.anims.play("player_wait", true);
+      player.anims.play("player_jump", true);
+      player.body.velocity.x *= PLAYER_FALL_MULTIPLICATOR;
     }
+
+    if(player.body.velocity.x !== 0)
+      player.setFlipX(userInput.left.isDown);
   },
 
   createUserInput(scene) {

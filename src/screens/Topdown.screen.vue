@@ -2,6 +2,7 @@
 import { onMounted, ref } from "vue";
 import Phaser from "phaser";
 import { TopdownScene } from "@/scenes/Topdown.scene";
+import Preloader from "@/ui-components/Preloader.component.vue";
 
 const gameContainer = ref(null);
 
@@ -29,14 +30,15 @@ onMounted(() => {
 
 <template>
   <div class="game-screen">
+    <Preloader />
     <div ref="gameContainer" class="game-screen__game-wrapper"></div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .game-screen {
-  &__game-wrapper {
-    border: 1px solid grey;
-  }
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 </style>
