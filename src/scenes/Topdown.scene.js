@@ -7,15 +7,16 @@ export class TopdownScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("player", "assets/img/player.png"); // из public/
+    playerComposition.preloadPlayerAnimation(this);
   }
 
   create() {
     this.userInput = playerComposition.createUserInput(this);
+    playerComposition.preparePlayerAnimation(this);
     this.player = playerComposition.createPlayer(this, this.cameras.main.width / 2, this.cameras.main.height / 2, 80, 80, 200, 20);
   }
 
   update() {
-    playerComposition.movePlayer(this.player, this.userInput);
+    playerComposition.movePlayerOnTopDown(this.player, this.userInput);
   }
 }
