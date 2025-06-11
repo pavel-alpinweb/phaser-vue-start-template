@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import Phaser from "phaser";
 import { PlatformerScene } from "@/scenes/platformer.scene";
 import Preloader from "@/ui-components/Preloader.component.vue";
+import {LEVEL_WIDTH, LEVEL_HEIGHT, LEVEL_GRAVITY} from "@/configs/engine.config"
 
 const gameContainer = ref(null);
 
@@ -12,11 +13,18 @@ onMounted(() => {
     scene: new PlatformerScene(),
     backgroundColor: "#000000",
     scale: {
-      width: 960,
-      height: 540,
+      width: LEVEL_WIDTH,
+      height: LEVEL_HEIGHT,
       mode: Phaser.Scale.FIT,
       parent: gameContainer.value,
       autoCenter: Phaser.Scale.CENTER_BOTH,
+    },
+    physics: {
+      default: 'arcade',
+      arcade: {
+        gravity: { x: 0, y: LEVEL_GRAVITY },
+        debug: false
+      }
     },
   });
 });

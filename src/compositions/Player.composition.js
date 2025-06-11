@@ -1,9 +1,11 @@
 import Phaser from "phaser";
+import {PLAYER_JUMP_MULTIPLICATOR, PLAYER_FALL_MULTIPLICATOR} from "@/configs/gameplay.config.js";
 
 export const playerComposition = {
   preloadPlayerAnimation(scene) {
     scene.load.atlas("player_wait", "assets/animation/wait.png", "assets/animation/wait.json");
     scene.load.atlas("player_move", "assets/animation/move.png", "assets/animation/move.json");
+    scene.load.atlas("player_jump", "assets/animation/jump.png", "assets/animation/jump.json");
   },
 
   preparePlayerAnimation(scene) {
@@ -19,11 +21,17 @@ export const playerComposition = {
       frameRate: 10,
       repeat: -1
     });
+    scene.anims.create({
+      key: "player_jump",
+      frames: scene.anims.generateFrameNames("player_jump", { start: 1, end: 8 }),
+      frameRate: 8,
+      repeat: 1
+    });
   },
 
   createPlayer(scene, x, y, width, height, speed, maxHealth) {
     const player = scene.physics.add.sprite(x, y, "player_wait", 0)
-      .setBodySize(width, height)
+      .setBodySize(100, 330)
       .setDisplaySize(width, height)
       .setOrigin(0.5, 1)
       .play("player_wait")
@@ -47,6 +55,43 @@ export const playerComposition = {
 
     if(player.body.velocity.x !== 0)
       player.setFlipX(userInput.left.isDown);
+  },
+
+  movePlayerOnPlatformers(player, userInput) {
+    if (userInput.up.isDown && player.body.blocked.down) {
+      // jump
+      player.anims.play("player_jump", true);
+      player.setVelocityY(-player.speed * PLAYER_JUMP_MULTIPLICATOR);
+    } else if (userInput.right.isDown && !player.body.blocked.down) {
+      // falling right
+      player.flipX = false;
+      player.anims.play("player_jump", true);
+      player.setVelocityX(player.speed * PLAYER_FALL_MULTIPLICATOR);
+    } else if (userInput.left.isDown && !player.body.blocked.down) {
+      // falling left
+      player.flipX = true;
+      player.anims.play("player_jump", true);
+      player.setVelocityX(-player.speed * PLAYER_FALL_MULTIPLICATOR);
+    } else if (!player.body.blocked.down) {
+      // falling down
+      player.anims.play("player_jump", true);
+      player.setVelocityX(0);
+    } else if (userInput.right.isDown) {
+      // move right
+      player.flipX = false;
+      player.setVelocityX(player.speed);
+      player.anims.play("player_move", true);
+    } else if (userInput.left.isDown) {
+      // move left
+      player.flipX = true;
+      player.setVelocityX(-player.speed);
+      player.anims.play("player_move", true);
+    } else {
+      // move stay
+      player.setVelocityX(0);
+      player.setVelocityX(0);
+      player.anims.play("player_wait", true);
+    }
   },
 
   createUserInput(scene) {

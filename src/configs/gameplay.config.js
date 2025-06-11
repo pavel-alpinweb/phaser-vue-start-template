@@ -1,0 +1,4 @@
+/* PLAYER SETTINGS */
+export const PLAYER_SPEED = 200;
+export const PLAYER_JUMP_MULTIPLICATOR = 3
+export const PLAYER_FALL_MULTIPLICATOR = 0.7
