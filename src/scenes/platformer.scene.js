@@ -1,7 +1,7 @@
 import * as Phaser from "phaser";
 import { sceneComposition } from "@/compositions/scene.composition.js";
 import {playerComposition} from "@/compositions/Player.composition.js";
-import {PLAYER_SPEED} from "@/configs/gameplay.config.js";
+import {platformerComposition} from "@/compositions/Platformer.composition.js";
 import * as Config from "@/configs/gameplay.config.js";
 
 export class PlatformerScene extends Phaser.Scene {
@@ -12,19 +12,19 @@ export class PlatformerScene extends Phaser.Scene {
   preload() {
     sceneComposition.preload(this);
 
-    this.load.image("platform", "assets/img/objects/platform.png");
+    platformerComposition.loadLevel(this);
     playerComposition.preloadPlayerAnimation(this);
   }
 
   create() {
-    this.platform = this.physics.add.staticSprite(450, 540, "platform");
+    const [map, layer] = platformerComposition.createLevel(this);
 
     this.userInput = playerComposition.createUserInput(this);
     playerComposition.preparePlayerAnimation(this);
     this.player = playerComposition.createPlayer(
       this,
-      this.cameras.main.width / 2,
-      this.cameras.main.height / 2,
+      -2520,
+      2620,
       Config.PLAYER_DISPLAY_WIDTH,
       Config.PLAYER_DISPLAY_HEIGHT,
       Config.PLAYER_BODY_WIDTH,
@@ -33,7 +33,8 @@ export class PlatformerScene extends Phaser.Scene {
       Config.PLAYER_MAX_HEALTH
     );
 
-    this.physics.add.collider(this.player, this.platform);
+    playerComposition.configureCameraFollow(this, this.player, this.cameras.main.width / 4, this.cameras.main.height / 4);
+    this.physics.add.collider(this.player, layer);
   }
 
   update(time, delta) {
