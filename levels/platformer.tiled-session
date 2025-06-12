@@ -1,0 +1,31 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "/home/alpinweb/works/phaser-vue-start-template/public/assets/levels/tilemaps",
+    "last.imagePath": "/home/alpinweb/works/phaser-vue-start-template/public/assets/levels/tiles",
+    "map.fixedSize": false,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 138,
+    "map.tileWidth": 138,
+    "openFiles": [
+    ],
+    "project": "platformer.tiled-project",
+    "recentFiles": [
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 138,
+        "width": 138
+    }
+}
