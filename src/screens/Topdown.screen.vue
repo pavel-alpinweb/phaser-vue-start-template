@@ -3,6 +3,8 @@ import { onMounted, ref } from "vue";
 import Phaser from "phaser";
 import { TopdownScene } from "@/scenes/Topdown.scene";
 import Preloader from "@/ui-components/Preloader.component.vue";
+import HealthBar from "@/ui-components/HealthBar.component.vue";
+import UiAnchor from "@/ui-components/UiAnchor.component.vue";
 
 const gameContainer = ref(null);
 
@@ -19,10 +21,10 @@ onMounted(() => {
       autoCenter: Phaser.Scale.CENTER_BOTH,
     },
     physics: {
-      default: 'arcade',
+      default: "arcade",
       arcade: {
-        debug: false
-      }
+        debug: false,
+      },
     },
   });
 });
@@ -31,6 +33,9 @@ onMounted(() => {
 <template>
   <div class="game-screen">
     <Preloader />
+    <UiAnchor anchor="top-left" :offset-x="30" :offset-y="30" target=".game-screen__game-wrapper">
+      <HealthBar />
+    </UiAnchor>
     <div ref="gameContainer" class="game-screen__game-wrapper"></div>
   </div>
 </template>
