@@ -12,7 +12,7 @@ export class PlatformerScene extends Phaser.Scene {
   preload() {
     sceneComposition.preload(this);
 
-    platformerComposition.loadLevel(this);
+    platformerComposition.preloadLevel(this);
     playerComposition.preloadPlayerAnimation(this);
   }
 
@@ -27,8 +27,8 @@ export class PlatformerScene extends Phaser.Scene {
       2620,
       Config.PLAYER_DISPLAY_WIDTH,
       Config.PLAYER_DISPLAY_HEIGHT,
-      Config.PLAYER_BODY_WIDTH,
-      Config.PLAYER_BODY_HEIGHT,
+      Config.PLAYER_PLATFORM_BODY_WIDTH,
+      Config.PLAYER_PLATFORM_BODY_HEIGHT,
       Config.PLAYER_SPEED,
       Config.PLAYER_MAX_HEALTH
     );

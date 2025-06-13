@@ -1,5 +1,5 @@
 export const platformerComposition = {
-  loadLevel(scene) {
+  preloadLevel(scene) {
     scene.load.image("platform", "assets/levels/tiles/platform.png");
     scene.load.tilemapTiledJSON("platformer-tilemap", "assets/levels/tilemaps/platformer.json");
   },
