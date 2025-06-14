@@ -5,8 +5,11 @@ import { TopdownScene } from "@/scenes/Topdown.scene";
 import Preloader from "@/ui-components/Preloader.component.vue";
 import HealthBar from "@/ui-components/HealthBar.component.vue";
 import UiAnchor from "@/ui-components/UiAnchor.component.vue";
+import { usePlayer } from "@/store/player.store";
+import { PLAYER_MAX_HEALTH } from "@/configs/gameplay.config";
 
 const gameContainer = ref(null);
+const playerStore = usePlayer();
 
 onMounted(() => {
   new Phaser.Game({
@@ -34,7 +37,7 @@ onMounted(() => {
   <div class="game-screen">
     <Preloader />
     <UiAnchor anchor="top-left" :offset-x="30" :offset-y="30" target=".game-screen__game-wrapper">
-      <HealthBar />
+      <HealthBar :max-health="PLAYER_MAX_HEALTH" :current-health="playerStore.currentHealth" />
     </UiAnchor>
     <div ref="gameContainer" class="game-screen__game-wrapper"></div>
   </div>
