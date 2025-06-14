@@ -11,13 +11,13 @@ export const playerComposition = {
   preparePlayerAnimation(scene) {
     scene.anims.create({
       key: "player_wait",
-      frames: scene.anims.generateFrameNames("player_wait", { start: 0, end: 7 }),
+      frames: scene.anims.generateFrameNames("player_wait", { start: 1, end: 8 }),
       frameRate: 10,
       repeat: -1
     });
     scene.anims.create({
       key: "player_move",
-      frames: scene.anims.generateFrameNames("player_move", { start: 0, end: 7 }),
+      frames: scene.anims.generateFrameNames("player_move", { start: 1, end: 8 }),
       frameRate: 10,
       repeat: -1
     });
@@ -30,7 +30,7 @@ export const playerComposition = {
   },
 
   createPlayer(scene, x, y, displayWidth, displayHeight, bodyWidth, bodyHeight, speed, maxHealth) {
-    const player = scene.physics.add.sprite(x, y, "player_wait", "0")
+    const player = scene.physics.add.sprite(x, y, "player_wait", "1")
       .setBodySize(bodyWidth, bodyHeight)
       .setDisplaySize(displayWidth, displayHeight)
       .setOrigin(0.5, 1)

@@ -23,8 +23,8 @@ export class PlatformerScene extends Phaser.Scene {
     playerComposition.preparePlayerAnimation(this);
     this.player = playerComposition.createPlayer(
       this,
-      -2520,
-      2620,
+      -1755,
+      1706,
       Config.PLAYER_DISPLAY_WIDTH,
       Config.PLAYER_DISPLAY_HEIGHT,
       Config.PLAYER_PLATFORM_BODY_WIDTH,
