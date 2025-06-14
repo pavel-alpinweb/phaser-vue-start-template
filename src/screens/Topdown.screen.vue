@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import {onBeforeUnmount, onMounted, ref} from "vue";
 import Phaser from "phaser";
 import { TopdownScene } from "@/scenes/Topdown.scene";
 import Preloader from "@/ui-components/Preloader.component.vue";
@@ -14,9 +14,10 @@ import * as EventNames from "@/configs/eventNames.config.js";
 
 const gameContainer = ref(null);
 const playerStore = usePlayer();
+let game = null;
 
 onMounted(() => {
-  const game = new Phaser.Game({
+  game = new Phaser.Game({
     type: Phaser.AUTO,
     scene: new TopdownScene(),
     backgroundColor: "#000000",
@@ -40,6 +41,11 @@ onMounted(() => {
     game?.destroy(true);
     router.push({ path: "/platformer" });
   });
+});
+
+onBeforeUnmount(() => {
+  EventBus.off(EventNames.GO_TO_TOPDOWN);
+  game?.destroy(true);
 });
 </script>
 
