@@ -107,8 +107,26 @@
         {
          "draworder":"topdown",
          "id":3,
-         "name":"Object Layer 1",
-         "objects":[],
+         "name":"object_layer",
+         "objects":[
+                {
+                 "gid":2,
+                 "height":60,
+                 "id":3,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"imageName",
+                         "type":"string",
+                         "value":"door2"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":60,
+                 "x":-960,
+                 "y":240
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -116,10 +134,10 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":1,
+ "nextobjectid":4,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.11.1-99-gec89c545",
+ "tiledversion":"1.11.2",
  "tileheight":60,
  "tilesets":[
         {
@@ -133,6 +151,35 @@
          "spacing":0,
          "tilecount":1,
          "tileheight":60,
+         "tilewidth":60
+        }, 
+        {
+         "columns":0,
+         "firstgid":2,
+         "grid":
+            {
+             "height":1,
+             "orientation":"orthogonal",
+             "width":1
+            },
+         "margin":0,
+         "name":"door_tiles",
+         "spacing":0,
+         "tilecount":2,
+         "tileheight":60,
+         "tiles":[
+                {
+                 "id":0,
+                 "image":"..\/tiles\/door2.png",
+                 "imageheight":60,
+                 "imagewidth":60
+                }, 
+                {
+                 "id":1,
+                 "image":"..\/tiles\/door.png",
+                 "imageheight":60,
+                 "imagewidth":60
+                }],
          "tilewidth":60
         }],
  "tilewidth":60,

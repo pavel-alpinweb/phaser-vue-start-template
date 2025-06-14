@@ -8,12 +8,15 @@ import UiAnchor from "@/ui-components/UiAnchor.component.vue";
 import { usePlayer } from "@/store/player.store";
 import { LEVEL_WIDTH, LEVEL_HEIGHT, LEVEL_GRAVITY } from "@/configs/engine.config";
 import { PLAYER_MAX_HEALTH } from "@/configs/gameplay.config";
+import {router} from "@/router.js";
+import {EventBus} from "@/utils/utils.js";
+import * as EventNames from "@/configs/eventNames.config.js";
 
 const gameContainer = ref(null);
 const playerStore = usePlayer();
 
 onMounted(() => {
-  new Phaser.Game({
+  const game = new Phaser.Game({
     type: Phaser.AUTO,
     scene: new PlatformerScene(),
     backgroundColor: "#ffcb84",
@@ -31,6 +34,12 @@ onMounted(() => {
         debug: false,
       },
     },
+  });
+
+  EventBus.on(EventNames.GO_TO_TOPDOWN, () => {
+    EventBus.off(EventNames.GO_TO_TOPDOWN);
+    game?.destroy(true);
+    router.push({ path: "/topdown" });
   });
 });
 </script>

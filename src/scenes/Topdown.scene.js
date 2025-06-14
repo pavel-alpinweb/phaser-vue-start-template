@@ -3,8 +3,9 @@ import {playerComposition} from "@/compositions/Player.composition.js";
 import {sceneComposition} from "@/compositions/scene.composition.js";
 import {backgroundComposition} from "@/compositions/Background.composition.js";
 import {topdownMapComposition} from "@/compositions/TopdownMap.composition.js";
+import {EventBus} from "@/utils/utils.js";
 import * as Config from "@/configs/gameplay.config.js";
-import { PLAYER_TOPDOWN_BODY_HEIGHT, PLAYER_TOPDOWN_BODY_WIDTH } from "@/configs/gameplay.config.js";
+import * as EventNames from "@/configs/eventNames.config.js";
 
 export class TopdownScene extends Phaser.Scene {
   constructor() {
@@ -20,7 +21,7 @@ export class TopdownScene extends Phaser.Scene {
 
   create() {
     this.background = backgroundComposition.createBackgroundImage(this, this.cameras.main.width, this.cameras.main.height);
-    const[map, layer] = topdownMapComposition.createLevel(this);
+    const[map, groundLayer, interactiveLayer] = topdownMapComposition.createLevel(this);
 
     this.userInput = playerComposition.createUserInput(this);
 
@@ -38,7 +39,8 @@ export class TopdownScene extends Phaser.Scene {
     );
     playerComposition.configureCameraFollow(this, this.player, this.cameras.main.width / 4, this.cameras.main.height / 4);
 
-    this.physics.add.collider(this.player, layer);
+    this.physics.add.collider(this.player, groundLayer);
+    this.physics.add.overlap(this.player, interactiveLayer, () => EventBus.emit(EventNames.GO_TO_PLATFORM));
   }
 
   update() {
