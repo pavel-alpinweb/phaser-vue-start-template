@@ -2,7 +2,18 @@
 import { computed, ref } from "vue";
 import IconHeart from "/public/assets/img/icons/heart.svg";
 
-  let fuelPercentage = ref(100);
+const props = defineProps({
+  currentHealth: {
+    type: Number,
+    default: 100,
+  },
+  maxHealth: {
+    type: Number,
+    default: 100,
+  },
+});
+
+  let fuelPercentage = computed(() => props.currentHealth / (props.maxHealth / 100));
 
   const color = computed(() => {
     if (fuelPercentage.value >= 60) {
