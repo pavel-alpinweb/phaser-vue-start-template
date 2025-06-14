@@ -25,7 +25,7 @@ const goToGame = (event) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #000 url("./assets/img/background/sky.png");
+  background: #000 url("/public/assets/img/background/sky.png");
   background-size: cover;
 
   &__form {
