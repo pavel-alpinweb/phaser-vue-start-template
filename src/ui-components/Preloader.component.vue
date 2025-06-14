@@ -1,23 +1,24 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { EventBus } from "@/utils/utils";
+import * as EventNames from "@/configs/eventNames.config.js";
 
 const progress = ref(0);
 const isShowing = ref(true);
 
 onMounted(() => {
-  EventBus.on("preloading-progress", (value) => {
+  EventBus.on(EventNames.PRELOADING_PROGRESS, (value) => {
     progress.value = Math.floor(value * 100);
   });
 
-  EventBus.on("complete-progress", (value) => {
+  EventBus.on(EventNames.COMPLETE_PRELOADING, (value) => {
     isShowing.value = !value;
   });
 });
 
 onBeforeUnmount(() => {
-  EventBus.off("preloading-progress");
-  EventBus.off("complete-progress");
+  EventBus.off(EventNames.PRELOADING_PROGRESS);
+  EventBus.off(EventNames.COMPLETE_PRELOADING);
 });
 </script>
 
