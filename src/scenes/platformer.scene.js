@@ -8,8 +8,9 @@ import * as EventNames from "@/configs/eventNames.config.js";
 import { GO_TO_TOPDOWN } from "@/configs/eventNames.config.js";
 
 export class PlatformerScene extends Phaser.Scene {
-  constructor() {
+  constructor(playerStore) {
     super("MainScene");
+    this.playerStore = playerStore;
   }
 
   preload() {
@@ -26,7 +27,7 @@ export class PlatformerScene extends Phaser.Scene {
     this.backgroundNear = backgroundNear;
     this.backgroundFar = backgroundFar;
 
-    const [map, layer, objectLayer] = platformerComposition.createLevel(this);
+    const [map, layer, doorLayer, heartLayer, bombLayer] = platformerComposition.createLevel(this);
 
     this.userInput = playerComposition.createUserInput(this);
     playerComposition.preparePlayerAnimation(this);
@@ -44,7 +45,17 @@ export class PlatformerScene extends Phaser.Scene {
 
     playerComposition.configureCameraFollow(this, this.player, this.cameras.main.width / 4, this.cameras.main.height / 4);
     this.physics.add.collider(this.player, layer);
-    this.physics.add.overlap(this.player, objectLayer, () => EventBus.emit(EventNames.GO_TO_TOPDOWN));
+    this.physics.add.overlap(this.player, doorLayer, () => EventBus.emit(EventNames.GO_TO_TOPDOWN));
+    this.physics.add.collider(this.player, heartLayer, (player, heart) => {
+      this.playerStore.increase(5, this.player.maxHealth);
+      heart.setActive(false).setVisible(false);
+      heart.body.enable = false;
+    });
+    this.physics.add.collider(this.player, bombLayer, (player, bomb) => {
+      this.playerStore.decrease(5);
+      bomb.setActive(false).setVisible(false);
+      bomb.body.enable = false;
+    });
   }
 
   update(time, delta) {

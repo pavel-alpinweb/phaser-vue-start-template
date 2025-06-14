@@ -19,7 +19,7 @@ let game = null;
 onMounted(() => {
   game = new Phaser.Game({
     type: Phaser.AUTO,
-    scene: new PlatformerScene(),
+    scene: new PlatformerScene(playerStore),
     backgroundColor: "#a09380",
     scale: {
       width: LEVEL_WIDTH,

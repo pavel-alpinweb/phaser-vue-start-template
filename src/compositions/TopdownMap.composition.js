@@ -1,27 +1,22 @@
-import {extractPropertyValue} from "@/utils/utils.js";
+import {tilemapComposition } from "@/compositions/Tilemap.composition.js";
 
 export const topdownMapComposition = {
   preloadLevel(scene) {
     scene.load.image("ground_tiles", "assets/levels/tiles/ground_tiles.jpg");
     scene.load.image("door", "assets/levels/tiles/door.png");
+    scene.load.image("bomb", "assets/levels/tiles/bomb.png");
+    scene.load.image("heart", "assets/levels/tiles/heart.png");
     scene.load.tilemapTiledJSON("topdown-tilemap", "assets/levels/tilemaps/topdown.json");
   },
 
   createLevel(scene) {
     const map = scene.make.tilemap({ key: "topdown-tilemap" });
 
-    const groundTileset = map.addTilesetImage("ground_tiles");
-    const groundLayer = map.createLayer("ground_layer", [groundTileset]);
-    map.setCollision([3]);
+    const groundLayer = tilemapComposition.createTileLayer(map, "ground_tiles", "ground_layer", [3]);
+    const doorLayer = tilemapComposition.createObjectLayer(scene, map, "door_layer");
+    const heartLayer = tilemapComposition.createObjectLayer(scene, map, "heart_layer");
+    const bombLayer = tilemapComposition.createObjectLayer(scene, map, "bomb_layer");
 
-    const interactiveLayerMeta = map.getObjectLayer("interactive_layer");
-    const interactiveLayer = scene.physics.add.staticGroup();
-    interactiveLayerMeta.objects.forEach(obj => {
-      const imageName = extractPropertyValue(obj, "imageName");
-      interactiveLayer.get(obj.x + obj.width / 2, obj.y - obj.height / 2, imageName)
-        .setSize(obj.width, obj.height);
-    });
-
-    return [map, groundLayer, interactiveLayer];
+    return [map, groundLayer, doorLayer, heartLayer, bombLayer];
   }
 };

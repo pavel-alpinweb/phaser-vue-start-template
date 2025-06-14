@@ -1,29 +1,25 @@
-import { extractPropertyValue } from "@/utils/utils.js";
+import {tilemapComposition } from "@/compositions/Tilemap.composition.js";
 
 export const platformerComposition = {
   preloadLevel(scene) {
     scene.load.image("platform", "assets/levels/tiles/platform.png");
     scene.load.image("door2", "assets/levels/tiles/door2.png");
+    scene.load.image("bomb", "assets/levels/tiles/bomb.png");
+    scene.load.image("heart", "assets/levels/tiles/heart.png");
     scene.load.tilemapTiledJSON("platformer-tilemap", "assets/levels/tilemaps/platformer.json");
     scene.load.image('mountBack', 'assets/img/background/mount-back.png');
     scene.load.image('mountFront', 'assets/img/background/mount-front.png');
   },
+
   createLevel(scene) {
     const map = scene.make.tilemap({ key: "platformer-tilemap" });
 
-    const block = map.addTilesetImage("platform", "platform");
-    const layer = map.createLayer("Platforms", [block]);
-    map.setCollision([1]);
+    const layer = tilemapComposition.createTileLayer(map, "platform", "Platforms", [1]);
+    const doorLayer = tilemapComposition.createObjectLayer(scene, map, "object_layer");
+    const heartLayer = tilemapComposition.createObjectLayer(scene, map, "heart_layer");
+    const bombLayer = tilemapComposition.createObjectLayer(scene, map, "bomb_layer");
 
-    const objectLayerMeta = map.getObjectLayer("object_layer");
-    const objectLayer = scene.physics.add.staticGroup();
-    objectLayerMeta.objects.forEach(obj => {
-      const imageName = extractPropertyValue(obj, "imageName");
-      objectLayer.get(obj.x + obj.width / 2, obj.y - obj.height / 2, imageName)
-        .setSize(obj.width, obj.height);
-    });
-
-    return [map, layer, objectLayer];
+    return [map, layer, doorLayer, heartLayer, bombLayer];
   },
   createParallaxImages(scene) {
     const camera = scene.cameras.main;
