@@ -20,6 +20,12 @@ export class PlatformerScene extends Phaser.Scene {
   }
 
   create() {
+    const [camera, backgroundNear, backgroundFar] = platformerComposition.createParallaxImages(this);
+
+    this.camera = camera;
+    this.backgroundNear = backgroundNear;
+    this.backgroundFar = backgroundFar;
+
     const [map, layer, objectLayer] = platformerComposition.createLevel(this);
 
     this.userInput = playerComposition.createUserInput(this);
@@ -43,5 +49,6 @@ export class PlatformerScene extends Phaser.Scene {
 
   update(time, delta) {
     playerComposition.movePlayerOnPlatformers(this.player, this.userInput);
+    platformerComposition.moveParallaxImages(this.camera, this.backgroundNear, this.backgroundFar, this);
   }
 }

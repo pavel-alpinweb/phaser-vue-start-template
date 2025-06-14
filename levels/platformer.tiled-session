@@ -16,9 +16,13 @@
             "scale": 0.33,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": -877.2727272727273,
-                "y": 1036.3636363636365
+                "x": -746.969696969697,
+                "y": 987.8787878787879
             }
+        },
+        "platformer.tmx#door_tiles": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
         },
         "platformer.tmx#platform": {
             "scaleInDock": 1
