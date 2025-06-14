@@ -94,6 +94,7 @@
                 }],
          "height":32,
          "id":1,
+         "locked":true,
          "name":"ground_layer",
          "opacity":1,
          "startx":0,
@@ -103,9 +104,38 @@
          "width":32,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":3,
+         "name":"interactive_layer",
+         "objects":[
+                {
+                 "gid":4,
+                 "height":60,
+                 "id":15,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"imageName",
+                         "type":"string",
+                         "value":"door"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":60,
+                 "x":929,
+                 "y":32
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":2,
- "nextobjectid":1,
+ "nextlayerid":4,
+ "nextobjectid":16,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -126,6 +156,35 @@
                 {
                  "id":2,
                  "probability":0.5
+                }],
+         "tilewidth":60
+        }, 
+        {
+         "columns":0,
+         "firstgid":4,
+         "grid":
+            {
+             "height":1,
+             "orientation":"orthogonal",
+             "width":1
+            },
+         "margin":0,
+         "name":"interactive_tiles",
+         "spacing":0,
+         "tilecount":2,
+         "tileheight":60,
+         "tiles":[
+                {
+                 "id":0,
+                 "image":"..\/tiles\/door.png",
+                 "imageheight":60,
+                 "imagewidth":60
+                }, 
+                {
+                 "id":2,
+                 "image":"..\/tiles\/door2.png",
+                 "imageheight":60,
+                 "imagewidth":60
                 }],
          "tilewidth":60
         }],

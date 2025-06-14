@@ -3,6 +3,9 @@ import { sceneComposition } from "@/compositions/scene.composition.js";
 import {playerComposition} from "@/compositions/Player.composition.js";
 import {platformerComposition} from "@/compositions/Platformer.composition.js";
 import * as Config from "@/configs/gameplay.config.js";
+import { EventBus } from "@/utils/utils.js";
+import * as EventNames from "@/configs/eventNames.config.js";
+import { GO_TO_TOPDOWN } from "@/configs/eventNames.config.js";
 
 export class PlatformerScene extends Phaser.Scene {
   constructor() {
@@ -17,7 +20,7 @@ export class PlatformerScene extends Phaser.Scene {
   }
 
   create() {
-    const [map, layer] = platformerComposition.createLevel(this);
+    const [map, layer, objectLayer] = platformerComposition.createLevel(this);
 
     this.userInput = playerComposition.createUserInput(this);
     playerComposition.preparePlayerAnimation(this);
@@ -35,6 +38,7 @@ export class PlatformerScene extends Phaser.Scene {
 
     playerComposition.configureCameraFollow(this, this.player, this.cameras.main.width / 4, this.cameras.main.height / 4);
     this.physics.add.collider(this.player, layer);
+    this.physics.add.overlap(this.player, objectLayer, () => EventBus.emit(EventNames.GO_TO_TOPDOWN));
   }
 
   update(time, delta) {
