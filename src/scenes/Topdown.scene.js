@@ -8,8 +8,9 @@ import * as Config from "@/configs/gameplay.config.js";
 import * as EventNames from "@/configs/eventNames.config.js";
 
 export class TopdownScene extends Phaser.Scene {
-  constructor() {
+  constructor(playerStore) {
     super("MainScene");
+    this.playerStore = playerStore;
   }
 
   preload() {
@@ -21,7 +22,7 @@ export class TopdownScene extends Phaser.Scene {
 
   create() {
     this.background = backgroundComposition.createBackgroundImage(this, this.cameras.main.width, this.cameras.main.height);
-    const[map, groundLayer, interactiveLayer] = topdownMapComposition.createLevel(this);
+    const[map, groundLayer, doorLayer, heartLayer, bombLayer] = topdownMapComposition.createLevel(this);
 
     this.userInput = playerComposition.createUserInput(this);
 
@@ -40,7 +41,17 @@ export class TopdownScene extends Phaser.Scene {
     playerComposition.configureCameraFollow(this, this.player, this.cameras.main.width / 4, this.cameras.main.height / 4);
 
     this.physics.add.collider(this.player, groundLayer);
-    this.physics.add.overlap(this.player, interactiveLayer, () => EventBus.emit(EventNames.GO_TO_PLATFORM));
+    this.physics.add.overlap(this.player, doorLayer, () => EventBus.emit(EventNames.GO_TO_PLATFORM));
+    this.physics.add.collider(this.player, heartLayer, (player, heart) => {
+      this.playerStore.increase(5, this.player.maxHealth);
+      heart.setActive(false).setVisible(false);
+      heart.body.enable = false;
+    });
+    this.physics.add.collider(this.player, bombLayer, (player, bomb) => {
+      this.playerStore.decrease(5);
+      bomb.setActive(false).setVisible(false);
+      bomb.body.enable = false;
+    });
   }
 
   update() {
