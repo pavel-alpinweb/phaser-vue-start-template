@@ -7,6 +7,7 @@ import HealthBar from "@/ui-components/HealthBar.component.vue";
 import UiAnchor from "@/ui-components/UiAnchor.component.vue";
 import { usePlayer } from "@/store/player.store";
 import { PLAYER_MAX_HEALTH } from "@/configs/gameplay.config";
+import { LEVEL_WIDTH, LEVEL_HEIGHT } from "@/configs/engine.config";
 
 const gameContainer = ref(null);
 const playerStore = usePlayer();
@@ -17,8 +18,8 @@ onMounted(() => {
     scene: new TopdownScene(),
     backgroundColor: "#000000",
     scale: {
-      width: 960,
-      height: 540,
+      width: LEVEL_WIDTH,
+      height: LEVEL_HEIGHT,
       mode: Phaser.Scale.FIT,
       parent: gameContainer.value,
       autoCenter: Phaser.Scale.CENTER_BOTH,

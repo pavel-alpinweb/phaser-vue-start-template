@@ -3,11 +3,24 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "platformer.tmx",
     "expandedProjectPaths": [
+        "."
     ],
+    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "": {
+            "scaleInDock": 1
+        },
+        "platformer.tmx": {
+            "scale": 0.33,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -877.2727272727273,
+                "y": 1036.3636363636365
+            }
+        },
+        "platformer.tmx#platform": {
             "scaleInDock": 1
         }
     },
@@ -19,13 +32,15 @@
     "map.tileHeight": 138,
     "map.tileWidth": 138,
     "openFiles": [
+        "platformer.tmx"
     ],
     "project": "platformer.tiled-project",
     "recentFiles": [
+        "platformer.tmx"
     ],
     "tileset.embedInMap": true,
     "tileset.tileSize": {
-        "height": 138,
-        "width": 138
+        "height": 60,
+        "width": 60
     }
 }
