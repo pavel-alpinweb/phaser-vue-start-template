@@ -5,7 +5,7 @@ const router = useRouter();
 
 const goToGame = (event) => {
   event.preventDefault();
-  router.push("/topdown");
+  router.push("/devroom");
 };
 </script>
 
