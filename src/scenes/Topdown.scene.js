@@ -43,12 +43,10 @@ export class TopdownScene extends Phaser.Scene {
     this.physics.add.collider(this.player, groundLayer);
     this.physics.add.overlap(this.player, doorLayer, () => EventBus.emit(EventNames.GO_TO_PLATFORM));
     this.physics.add.collider(this.player, heartLayer, (player, heart) => {
-      this.playerStore.increase(5, this.player.maxHealth);
       heart.setActive(false).setVisible(false);
       heart.body.enable = false;
     });
     this.physics.add.collider(this.player, bombLayer, (player, bomb) => {
-      this.playerStore.decrease(5);
       bomb.setActive(false).setVisible(false);
       bomb.body.enable = false;
     });
