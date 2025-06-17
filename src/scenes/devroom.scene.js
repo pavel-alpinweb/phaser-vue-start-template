@@ -41,5 +41,6 @@ export class DevroomScene extends Phaser.Scene {
     backgroundComposition.moveBackground(this.cameras.main, this.background);
     shipComposition.updateShipAim(this, this.ship);
     shipComposition.movePlayerOnTopDownWithMouse(this.ship);
+    devroomComposition.moveIslands();
   }
 }
