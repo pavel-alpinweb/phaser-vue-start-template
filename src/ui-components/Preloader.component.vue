@@ -37,7 +37,7 @@ onBeforeUnmount(() => {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 10;
+  z-index: 10000;
   background-color: #000;
   overflow: hidden;
   display: flex;
