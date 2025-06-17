@@ -1,5 +1,5 @@
 {
-    "activeFile": "devroom.tmx",
+    "activeFile": "",
     "expandedProjectPaths": [
         "."
     ],
@@ -70,13 +70,12 @@
     "map.tileHeight": 60,
     "map.tileWidth": 60,
     "openFiles": [
-        "devroom.tmx"
     ],
     "project": "devroom.tiled-project",
     "recentFiles": [
+        "devroom.tmx",
         "platformer.tmx",
-        "topdown.tmx",
-        "devroom.tmx"
+        "topdown.tmx"
     ],
     "tileset.embedInMap": true,
     "tileset.tileSize": {
