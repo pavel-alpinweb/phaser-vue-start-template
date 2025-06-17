@@ -16,3 +16,4 @@ export const SHIP_DISPLAY_HEIGHT = 100;
 export const SHIP_TOPDOWN_BODY_WIDTH = 100;
 export const SHIP_TOPDOWN_BODY_HEIGHT = 100;
 export const SHIP_ROTATION_SPEED = 0.05;
+export const ISLAND_SPEED_IN_RADIAN = 0.001;

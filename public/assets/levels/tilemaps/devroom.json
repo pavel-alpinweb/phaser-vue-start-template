@@ -40,8 +40,8 @@
                  "type":"Island",
                  "visible":true,
                  "width":512,
-                 "x":596,
-                 "y":512
+                 "x":1022,
+                 "y":516
                 }],
          "opacity":1,
          "properties":[
@@ -54,9 +54,32 @@
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":4,
+         "name":"points_layer",
+         "objects":[
+                {
+                 "height":0,
+                 "id":7,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"WorldCenter",
+                 "visible":true,
+                 "width":0,
+                 "x":562,
+                 "y":272
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":4,
- "nextobjectid":7,
+ "nextlayerid":5,
+ "nextobjectid":8,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

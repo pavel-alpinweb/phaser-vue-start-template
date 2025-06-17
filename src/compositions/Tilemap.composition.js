@@ -19,5 +19,5 @@ export const tilemapComposition = {
 };
 
 function extractPropertyValue(tileMeta, propertyName) {
-  return tileMeta?.properties.find(property => property.name === propertyName)?.value;
+  return tileMeta.properties?.find(property => property.name === propertyName)?.value;
 };
