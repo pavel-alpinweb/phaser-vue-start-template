@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="60" tileheight="60" infinite="1" nextlayerid="4" nextobjectid="7">
+ <editorsettings>
+  <export target="../public/assets/levels/tilemaps/devroom.json" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" name="islands_tiles" tilewidth="512" tileheight="512" tilecount="2" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image source="../public/assets/levels/tiles/island-grass-big.png" width="512" height="512"/>
+  </tile>
+  <tile id="1">
+   <image source="../public/assets/levels/tiles/island-ground-big.png" width="512" height="512"/>
+  </tile>
+ </tileset>
+ <objectgroup id="3" name="islands_layer">
+  <properties>
+   <property name="imageName" value=""/>
+  </properties>
+  <object id="5" type="Island" gid="1" x="-2" y="510" width="512" height="512">
+   <properties>
+    <property name="imageName" value="island-grass-big"/>
+   </properties>
+  </object>
+  <object id="6" type="Island" gid="2" x="596" y="512" width="512" height="512">
+   <properties>
+    <property name="imageName" value="island-ground-big"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
