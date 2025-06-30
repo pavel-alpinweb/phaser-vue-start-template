@@ -11,6 +11,7 @@ const goToGame = (event) => {
 
 <template>
   <div class="start-menu-screen">
+    <h1  class="start-menu-screen__title">Starter Template: Phaser + Vue + Pinia + Vite</h1>
     <form class="start-menu-screen__form" @submit="goToGame">
       <button class="start-menu-screen__btn">Play</button>
     </form>
@@ -23,9 +24,10 @@ const goToGame = (event) => {
   height: 100vh;
   overflow: hidden;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #000 url("/public/assets/img/background/sky.png");
+  background: #a09380 url("/public/assets/img/background/sky.png") center center;
   background-size: cover;
 
   &__form {
@@ -34,6 +36,10 @@ const goToGame = (event) => {
     align-items: center;
     gap: 10px;
     width: 500px;
+  }
+  
+  &__title {
+    color: #2c1f1a;
   }
 
   &__input {
@@ -51,18 +57,18 @@ const goToGame = (event) => {
 
   &__btn {
     width: 60%;
-    height: 153px;
+    height: 100px;
     cursor: pointer;
     border: none;
-    background: url("/assets/img/ui/btn01.png") no-repeat center;
+    background: #7f4837;
     background-size: 100%;
-    color: #603d11;
+    color: #d99b47;
     text-transform: uppercase;
     font-weight: bold;
     font-size: 50px;
     font-family: inherit;
     &:hover {
-      background: url("/assets/img/ui/btn02.png") no-repeat center;
+      background: #b56f44;
       background-size: 100%;
     }
   }
