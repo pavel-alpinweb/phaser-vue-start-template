@@ -11,7 +11,7 @@ const goToGame = (event) => {
 
 <template>
   <div class="start-menu-screen">
-    <h1  class="start-menu-screen__title">Starter Template: Phaser + Vue + Pinia + Vite</h1>
+    <h1  class="start-menu-screen__title">Starter Template <br/>Phaser + Vue + Pinia + Vite</h1>
     <form class="start-menu-screen__form" @submit="goToGame">
       <button class="start-menu-screen__btn">Play</button>
     </form>
@@ -37,9 +37,10 @@ const goToGame = (event) => {
     gap: 10px;
     width: 500px;
   }
-  
+
   &__title {
     color: #2c1f1a;
+    text-align: center;
   }
 
   &__input {
