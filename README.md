@@ -47,6 +47,7 @@ Character design and animation by Pavel Bezdornov.
 - `store` – contains files for working with Pinia
 - `ui-components` – contains Vue components for rendering the HUD
 - `utils` – contains helper functions
+- `public/assets` – contains all assets
 
 
 
