@@ -35,7 +35,7 @@ Character design and animation by Pavel Bezdornov.
 - Install dependencies: `npm i`
 - Start development server: `npm run dev`
 - Build the project: `npm run build`
-- Serve the built project: `npm serve dist`  
+- Serve the built project: `npx serve dist`  
   (This allows running the template on a regular hosting or platforms like itch.io)
 
 ## Project Structure:
