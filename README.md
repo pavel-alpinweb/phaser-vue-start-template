@@ -12,6 +12,7 @@ Supports fullscreen mode.
 - [Vue](https://vuejs.org) – used for building user interfaces
 - [Pinia](https://pinia.vuejs.org) – used for managing game state
 - [Vite](https://vitejs.dev) – used for project bundling and development
+- [Electron](https://www.electronjs.org/docs/latest/) - is used for creating a desktop application version.
 
 ## Authors:
 
@@ -37,17 +38,21 @@ Character design and animation by Pavel Bezdornov.
 - Build the project: `npm run build`
 - Serve the built project: `npx serve dist`  
   (This allows running the template on a regular hosting or platforms like itch.io)
+- Start electron application: `npm run electron:start`
+- Package the Electron application: `npm run electron:package`
+- Build the Electron application: `npm run electron:make`
 
 ## Project Structure:
 
-- `composition` – contains files for game logic using the Phaser engine
-- `configs` – contains constants for engine settings, game logic, and event names
-- `scenes` – contains files for managing Phaser scenes (`Phaser.Scene`)
-- `screens` – contains Vue components responsible for rendering game screens
-- `store` – contains files for working with Pinia
-- `ui-components` – contains Vue components for rendering the HUD
-- `utils` – contains helper functions
+- `src/composition` – contains files for game logic using the Phaser engine
+- `src/configs` – contains constants for engine settings, game logic, and event names
+- `src/scenes` – contains files for managing Phaser scenes (`Phaser.Scene`)
+- `src/screens` – contains Vue components responsible for rendering game screens
+- `src/store` – contains files for working with Pinia
+- `src/ui-components` – contains Vue components for rendering the HUD
+- `src/utils` – contains helper functions
 - `public/assets` – contains all assets
+- `electron` - entry point of Electron application
 
 
 
