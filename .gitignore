@@ -26,3 +26,5 @@ out
 /dist.zip
 
 out/
+*storybook.log
+storybook-static

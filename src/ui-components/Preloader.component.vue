@@ -43,5 +43,9 @@ onBeforeUnmount(() => {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &__progress {
+    color: #fff;
+  }
 }
 </style>
