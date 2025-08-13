@@ -1,7 +1,7 @@
 # Starter Template: Phaser + Vue + Pinia + Vite for HTML5 Games
 
 ```md
-This is a starter template for creating HTML5 games.  
+This is a starter template for creating HTML5 and PC games.  
 Optimized for PC and platforms like [itch.io](https://itch.io).  
 Supports fullscreen mode.
 ```
