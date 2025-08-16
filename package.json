@@ -4,15 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "main": "electron.js",
+  "description": "Start template for Phaser + Vue",
+  "author": "bakuardgamestudio@gmail.com, https://alpinweb.com",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "electron:start": "electron-forge start",
-    "electron:package": "electron-forge package",
-    "electron:make": "electron-forge make",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "electron:start": "npm run build && electron-forge start",
+    "electron:package": "npm run build && electron-forge package",
+    "electron:make": "npm run electron:package && electron-forge make"
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.1",
@@ -33,6 +35,7 @@
     "@storybook/addon-docs": "^9.1.1",
     "@storybook/vue3-vite": "^9.1.1",
     "@vitejs/plugin-vue": "^5.2.3",
+    "asar": "^3.2.0",
     "electron": "37.2.4",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
