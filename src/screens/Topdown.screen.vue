@@ -24,7 +24,7 @@ onMounted(() => {
     scale: {
       width: LEVEL_WIDTH,
       height: LEVEL_HEIGHT,
-      mode: Phaser.Scale.FIT,
+      mode: Phaser.Scale.ENVELOP,
       parent: gameContainer.value,
       autoCenter: Phaser.Scale.CENTER_BOTH,
     },

@@ -1,5 +1,10 @@
 import { app, BrowserWindow } from 'electron';
 import { LEVEL_WIDTH, LEVEL_HEIGHT } from './src/configs/engine.config.js';
+import path from 'node:path';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const appDir = dirname(fileURLToPath(import.meta.url));
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -10,7 +15,7 @@ function createWindow() {
     }
   });
   win.setMenu(null);
-  win.loadFile('dist/index.html');
+  win.loadFile(path.join(appDir, 'dist', 'index.html'));
   if(!app.isPackaged) win.webContents.openDevTools({ mode: 'detach' });
 }
 
