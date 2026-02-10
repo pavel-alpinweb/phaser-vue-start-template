@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import {PLAYER_JUMP_MULTIPLICATOR, PLAYER_FALL_MULTIPLICATOR} from "@/configs/gameplay.config.js";
+import {PLAYER_JUMP_MULTIPLICATOR, PLAYER_FALL_MULTIPLICATOR, HEAL_VALUE, BOMB_DAMAGE} from "@/configs/gameplay.config.js";
 
 export const playerComposition = {
   preloadPlayerAnimation(scene) {
@@ -88,5 +88,17 @@ export const playerComposition = {
       up: Phaser.Input.Keyboard.KeyCodes.W,
       down: Phaser.Input.Keyboard.KeyCodes.S,
     });
+  },
+
+  handleHeartCollision(player, heart, playerStore) {
+    playerStore.increase(HEAL_VALUE, player.maxHealth);
+    heart.setActive(false).setVisible(false);
+    heart.body.enable = false;
+  },
+
+  handleBombCollision(player, bomb, playerStore) {
+    playerStore.decrease(BOMB_DAMAGE);
+    bomb.setActive(false).setVisible(false);
+    bomb.body.enable = false;
   }
 };

@@ -8,8 +8,8 @@ import UiAnchor from "@/ui-components/UiAnchor.component.vue";
 import { usePlayer } from "@/store/player.store";
 import { LEVEL_WIDTH, LEVEL_HEIGHT, LEVEL_GRAVITY } from "@/configs/engine.config";
 import { PLAYER_MAX_HEALTH } from "@/configs/gameplay.config";
-import {router} from "@/router.js";
-import {EventBus} from "@/utils/utils.js";
+import { router } from "@/router.js";
+import { EventBus } from "@/utils/utils.js";
 import * as EventNames from "@/configs/eventNames.config.js";
 
 const gameContainer = ref(null);
@@ -24,7 +24,7 @@ onMounted(() => {
     scale: {
       width: LEVEL_WIDTH,
       height: LEVEL_HEIGHT,
-      mode: Phaser.Scale.ENVELOP,
+      mode: Phaser.Scale.FIT,
       parent: gameContainer.value,
       autoCenter: Phaser.Scale.CENTER_BOTH,
     },
