@@ -11,6 +11,7 @@ import { LEVEL_WIDTH, LEVEL_HEIGHT } from "@/configs/engine.config";
 import { router } from "@/router.js";
 import { EventBus } from "@/utils/utils.js";
 import * as EventNames from "@/configs/eventNames.config.js";
+import LanguageSwitcher from "@/ui-components/LanguageSwitcher.vue";
 
 const gameContainer = ref(null);
 const playerStore = usePlayer();
@@ -52,6 +53,9 @@ onBeforeUnmount(() => {
 <template>
   <div class="game-screen">
     <Preloader />
+    <UiAnchor anchor="top-right" :offset-x="10" :offset-y="10" target=".game-screen__game-wrapper">
+      <LanguageSwitcher />
+    </UiAnchor>
     <UiAnchor anchor="top-left" :offset-x="30" :offset-y="30" target=".game-screen__game-wrapper">
       <HealthBar :max-health="PLAYER_MAX_HEALTH" :current-health="playerStore.currentHealth" />
     </UiAnchor>

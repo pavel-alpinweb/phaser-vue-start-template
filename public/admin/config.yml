@@ -6,6 +6,49 @@ public_folder: "/uploads"
 local_backend: true
 
 collections:
+  - name: "localization"
+    label: "Localization"
+    files:
+      - file: "src/configs/uiLocalization.json"
+        label: "UI Localization"
+        name: "ui_localization"
+        format: "json"
+        fields:
+          - label: "Language Switcher Label"
+            name: "language_label"
+            widget: "object"
+            fields:
+              - { label: "English", name: "en", widget: "string" }
+              - { label: "Russian", name: "ru", widget: "string" }
+            
+          - label: "Start Button Text"
+            name: "start_button"
+            widget: "object"
+            fields:
+              - { label: "English", name: "en", widget: "string" }
+              - { label: "Russian", name: "ru", widget: "string" }
+
+          - label: "Main Title (Charlie)"
+            name: "main_title"
+            widget: "object"
+            fields:
+              - { label: "English", name: "en", widget: "string" }
+              - { label: "Russian", name: "ru", widget: "string" }
+
+          - label: "Main Description"
+            name: "main_description"
+            widget: "object"
+            fields:
+              - { label: "English", name: "en", widget: "string" }
+              - { label: "Russian", name: "ru", widget: "string" }
+
+          - label: "Loading Text"
+            name: "loading"
+            widget: "object"
+            fields:
+              - { label: "English", name: "en", widget: "string" }
+              - { label: "Russian", name: "ru", widget: "string" }
+
   - name: "gameplay"
     label: "Gameplay Config"
     files:

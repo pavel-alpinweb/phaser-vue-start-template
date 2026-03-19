@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from "vue";
-import { EventBus } from "@/utils/utils";
+import { EventBus, createI18nContentHelpers } from "@/utils/utils";
 import * as EventNames from "@/configs/eventNames.config.js";
+import i18next from "@/i18n.js";
+import { UI_LOCALIZATION } from "@/configs/uiLocalization.config.js";
 
+const { tContent } = createI18nContentHelpers(i18next);
 const progress = ref(0);
 const isShowing = ref(true);
 
@@ -25,7 +28,9 @@ onBeforeUnmount(() => {
 <template>
   <transition name="fade">
     <div v-if="isShowing" class="preloader">
-      <h2 class="preloader__progress">Loading... {{ progress }}%</h2>
+      <h2 class="preloader__progress">
+        {{ tContent(UI_LOCALIZATION.loading) }}... {{ progress }}%
+      </h2>
     </div>
   </transition>
 </template>
