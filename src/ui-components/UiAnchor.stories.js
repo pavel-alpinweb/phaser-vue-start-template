@@ -1,60 +1,60 @@
 import UiAnchor from './UiAnchor.component.vue';
 
 export default {
-  title: 'Base UI Components/Anchor',
+  title: "Base UI Components/Anchor",
   component: UiAnchor,
+  tags: ["autodocs"],
   parameters: {
     docs: {
       description: {
         component:
-          'Компонент для позиционирования произвольного содержимого относительно canvas внутри указанного контейнера. ' +
-          'Отслеживает изменения размера и переключения полноэкранного режима, подстраивая позицию элемента.',
+          "Component for positioning arbitrary content relative to a canvas within a specified container. " + "Tracks window resizing and fullscreen mode toggles to adjust the element position.",
       },
     },
   },
   argTypes: {
     target: {
-      control: 'text',
-      description: 'CSS-селектор контейнера, внутри которого ищется canvas',
+      control: "text",
+      description: "CSS selector of the container where the canvas is located",
       table: {
-        category: 'Props',
-        type: { summary: 'string' },
+        category: "Props",
+        type: { summary: "string" },
         defaultValue: { summary: '".game-container"' },
       },
     },
     anchor: {
-      control: 'select',
-      options: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
-      description: 'Положение относительно canvas',
+      control: "select",
+      options: ["top-left", "top-right", "bottom-left", "bottom-right"],
+      description: "Position relative to the canvas",
       table: {
-        category: 'Props',
+        category: "Props",
         type: { summary: `'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'` },
         defaultValue: { summary: '"top-left"' },
       },
     },
     offsetX: {
-      control: { type: 'number', min: 0, step: 1 },
-      description: 'Отступ по оси X в пикселях',
+      control: { type: "number", min: 0, step: 1 },
+      description: "Offset along the X-axis in pixels",
       table: {
-        category: 'Props',
-        type: { summary: 'number' },
+        category: "Props",
+        type: { summary: "number" },
         defaultValue: { summary: 10 },
       },
     },
     offsetY: {
-      control: { type: 'number', min: 0, step: 1 },
-      description: 'Отступ по оси Y в пикселях',
+      control: { type: "number", min: 0, step: 1 },
+      description: "Offset along the Y-axis in pixels",
       table: {
-        category: 'Props',
-        type: { summary: 'number' },
+        category: "Props",
+        type: { summary: "number" },
         defaultValue: { summary: 10 },
       },
     },
     default: {
-      description: 'Слот для содержимого, которое будет позиционироваться',
+      description: "Slot for the content to be positioned",
       table: {
-        category: 'Slots',
-        type: { summary: 'VNode' },
+        category: "Slots",
+        type: { summary: "VNode" },
       },
     },
   },

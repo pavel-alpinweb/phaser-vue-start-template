@@ -4,35 +4,33 @@ import UiModal from "./UiModal.component.vue";
 export default {
   title: "Base UI Components/Modal",
   component: UiModal,
+  tags: ["autodocs"],
   parameters: {
     docs: {
       description: {
-        component:
-          "Модальное окно, которое позиционируется относительно элемента canvas внутри указанного контейнера. Поддерживает закрытие по Escape и клику вне содержимого.",
+        component: "A modal window positioned relative to a canvas element within a specified container. Supports closing via Escape key and clicking outside the content.",
       },
     },
   },
   argTypes: {
     modelValue: {
       control: "boolean",
-      description: "Управляет видимостью модального окна (v-model)",
+      description: "Controls the visibility of the modal window (v-model)",
       defaultValue: false,
     },
     target: {
       control: "text",
-      description:
-        "CSS-селектор контейнера с canvas, к которому позиционируется модалка",
+      description: "CSS selector of the container with the canvas that the modal is positioned against",
       defaultValue: "#story-game-container",
     },
     maxWidth: {
       control: "text",
-      description: "Максимальная ширина контента модального окна",
+      description: "Maximum width of the modal content",
       defaultValue: "90%",
     },
     maxHeightPadding: {
       control: "number",
-      description:
-        "Отступ по высоте (в пикселях), вычитаемый из высоты canvas для максимальной высоты контента",
+      description: "Height offset (in pixels) subtracted from the canvas height for the maximum content height",
       defaultValue: 40,
     },
   },
@@ -51,39 +49,39 @@ const Template = (args) => ({
     return { args, isOpen, updateModelValue };
   },
   template: `
-    <div>
-      <div id="story-game-container" style="width:800px; height:400px; border:1px solid #ccc; margin:0 auto; position:relative;">
-        <canvas id="story-canvas" width="800" height="400" style="display:block; width:100%; height:100%; background:#222;"></canvas>
-      </div>
-      <button @click="isOpen = true">Открыть модалку</button>
-      <UiModal 
-        v-bind="args" 
-        :modelValue="isOpen" 
-        @update:modelValue="updateModelValue"
-      >
-        <template #default>
-          <h2>Заголовок модального окна</h2>
-          <p>Это содержимое модального окна.</p>
-          <p>Это содержимое модального окна.</p>
-          <p>Это содержимое модального окна.</p>
-          <p>Это содержимое модального окна.</p>
-          <p>Это содержимое модального окна.</p>
-          <p>Это содержимое модального окна.</p>
-          <p>Это содержимое модального окна.</p>
-          <p>Это содержимое модального окна.</p>
-          <p>Это содержимое модального окна.</p>
-          <p>Это содержимое модального окна.</p>
-          <p>Это содержимое модального окна.</p>
-          <p>Это содержимое модального окна.</p>
-          <p>Это содержимое модального окна.</p>
-          <p>Это содержимое модального окна.</p>
-          <p>Это содержимое модального окна.</p>
-          <p>Это содержимое модального окна.</p>
-          <p>Это содержимое модального окна.</p>
-          <button @click="updateModelValue(false)">Закрыть</button>
-        </template>
-      </UiModal>
-    </div>
+        <div>
+          <div id="story-game-container" style="width:800px; height:400px; border:1px solid #ccc; margin:0 auto; position:relative;">
+            <canvas id="story-canvas" width="800" height="400" style="display:block; width:100%; height:100%; background:#222;"></canvas>
+          </div>
+          <button @click="isOpen = true">Open Modal</button>
+          <UiModal 
+            v-bind="args" 
+            :modelValue="isOpen" 
+            @update:modelValue="updateModelValue"
+          >
+            <template #default>
+              <h2>Modal Title</h2>
+              <p>This is the modal content.</p>
+              <p>This is the modal content.</p>
+              <p>This is the modal content.</p>
+              <p>This is the modal content.</p>
+              <p>This is the modal content.</p>
+              <p>This is the modal content.</p>
+              <p>This is the modal content.</p>
+              <p>This is the modal content.</p>
+              <p>This is the modal content.</p>
+              <p>This is the modal content.</p>
+              <p>This is the modal content.</p>
+              <p>This is the modal content.</p>
+              <p>This is the modal content.</p>
+              <p>This is the modal content.</p>
+              <p>This is the modal content.</p>
+              <p>This is the modal content.</p>
+              <p>This is the modal content.</p>
+              <button @click="updateModelValue(false)">Close</button>
+            </template>
+          </UiModal>
+        </div>
   `,
 });
 

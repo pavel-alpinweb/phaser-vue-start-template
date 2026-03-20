@@ -13,7 +13,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Кнопка переключения языков (RU/EN). Использует глобальный экземпляр i18next.',
+        component: 'Language toggle button (RU/EN). Uses the global i18next instance.',
       },
     },
   },

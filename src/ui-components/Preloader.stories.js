@@ -3,32 +3,33 @@ import { EventBus } from '@/utils/utils';
 import * as EventNames from '@/configs/eventNames.config.js';
 
 export default {
-  title: 'Base UI Components/Preloader',
+  title: "Base UI Components/Preloader",
   component: Preloader,
+  tags: ["autodocs"],
   parameters: {
     docs: {
       description: {
-        component: 'Прелоадер, управляемый через события EventBus.',
+        component: "Preloader controlled via EventBus events.",
       },
     },
   },
   argTypes: {
-    // Описание событий
+    // Event descriptions
     PRELOADING_PROGRESS: {
-      action: 'PRELOADING_PROGRESS',
+      action: "PRELOADING_PROGRESS",
       table: {
-        category: 'Events',
-        type: { summary: 'number' },
+        category: "Events",
+        type: { summary: "number" },
       },
-      description: 'Вызывается при обновлении прогресса загрузки',
+      description: "Triggered when loading progress is updated",
     },
     COMPLETE_PRELOADING: {
-      action: 'COMPLETE_PRELOADING',
+      action: "COMPLETE_PRELOADING",
       table: {
-        category: 'Events',
-        type: { summary: 'boolean' },
+        category: "Events",
+        type: { summary: "boolean" },
       },
-      description: 'Вызывается при завершении загрузки',
+      description: "Triggered when loading is complete",
     },
   },
 };

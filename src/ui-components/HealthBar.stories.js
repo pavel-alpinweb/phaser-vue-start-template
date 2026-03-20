@@ -4,14 +4,21 @@ export default {
   title: 'Game Widgets/HealthBar',
   component: HealthBar,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Visual health bar for displaying character or entity health status in percentage.',
+      },
+    },
+  },
   argTypes: {
     currentHealth: {
       control: { type: 'number', min: 0, max: 100 },
-      description: 'Текущий уровень здоровья в процентах',
+      description: 'Current health level in percentage',
     },
     maxHealth: {
       control: { type: 'number', min: 1 },
-      description: 'Максимальное здоровье',
+      description: 'Maximum health value',
     },
   },
 };
