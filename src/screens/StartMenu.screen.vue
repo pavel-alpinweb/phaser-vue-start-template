@@ -4,6 +4,7 @@ import LanguageSwitcher from "@/ui-components/LanguageSwitcher.vue";
 import { createI18nContentHelpers } from "@/utils/utils.js";
 import i18next from "@/i18n.js";
 import { UI_LOCALIZATION } from "@/configs/uiLocalization.config.js";
+import MainLogo from "/public/assets/img/Logo.svg";
 
 const router = useRouter();
 const { tContent } = createI18nContentHelpers(i18next);
@@ -17,6 +18,9 @@ const goToGame = (event) => {
 <template>
   <div class="start-menu-screen">
     <LanguageSwitcher />
+    <div class="start-menu-screen__logo-container">
+      <MainLogo class="start-menu-screen__logo" />
+    </div>
     <h1 class="start-menu-screen__title">
       <span class="start-menu-screen__title-main">{{ tContent(UI_LOCALIZATION.main_title) }}</span>
       <span class="start-menu-screen__title-sub">{{ tContent(UI_LOCALIZATION.main_description) }}</span>
@@ -40,6 +44,19 @@ const goToGame = (event) => {
   justify-content: center;
   background: #a09380 url("/public/assets/img/background/sky.png") center center;
   background-size: cover;
+
+  &__logo-container {
+    width: 250px;
+    height: auto;
+    margin-bottom: -20px;
+    filter: drop-shadow(4px 4px 0px #2c1f1a);
+    animation: float 4s ease-in-out infinite;
+  }
+
+  &__logo {
+    width: 100%;
+    height: 100%;
+  }
 
   &__form {
     display: flex;
@@ -111,6 +128,16 @@ const goToGame = (event) => {
       background: #b56f44;
       background-size: 100%;
     }
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
   }
 }
 </style>
