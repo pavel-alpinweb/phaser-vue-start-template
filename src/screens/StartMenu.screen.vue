@@ -4,7 +4,7 @@ import LanguageSwitcher from "@/ui-components/LanguageSwitcher.vue";
 import { createI18nContentHelpers } from "@/utils/utils.js";
 import i18next from "@/i18n.js";
 import { UI_LOCALIZATION } from "@/configs/uiLocalization.config.js";
-import MainLogo from "/public/assets/img/Logo.svg";
+import MainLogo from "/public/assets/img/Logo.svg?component";
 
 const router = useRouter();
 const { tContent } = createI18nContentHelpers(i18next);
@@ -18,18 +18,20 @@ const goToGame = (event) => {
 <template>
   <div class="start-menu-screen">
     <LanguageSwitcher />
-    <div class="start-menu-screen__logo-container">
-      <MainLogo class="start-menu-screen__logo" />
+    <div class="start-menu-screen__content">
+      <div class="start-menu-screen__logo-container">
+        <MainLogo class="start-menu-screen__logo" />
+      </div>
+      <h1 class="start-menu-screen__title">
+        <span class="start-menu-screen__title-main">{{ tContent(UI_LOCALIZATION.main_title) }}</span>
+        <span class="start-menu-screen__title-sub">{{ tContent(UI_LOCALIZATION.main_description) }}</span>
+      </h1>
+      <form class="start-menu-screen__form" @submit="goToGame">
+        <button class="start-menu-screen__btn">
+          {{ tContent(UI_LOCALIZATION.start_button) }}
+        </button>
+      </form>
     </div>
-    <h1 class="start-menu-screen__title">
-      <span class="start-menu-screen__title-main">{{ tContent(UI_LOCALIZATION.main_title) }}</span>
-      <span class="start-menu-screen__title-sub">{{ tContent(UI_LOCALIZATION.main_description) }}</span>
-    </h1>
-    <form class="start-menu-screen__form" @submit="goToGame">
-      <button class="start-menu-screen__btn">
-        {{ tContent(UI_LOCALIZATION.start_button) }}
-      </button>
-    </form>
   </div>
 </template>
 
@@ -41,14 +43,22 @@ const goToGame = (event) => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  padding-bottom: 40px;
   background: #a09380 url("/public/assets/img/background/sky.png") center center;
   background-size: cover;
 
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: scale(0.8);
+  }
+
   &__logo-container {
-    width: 250px;
+    width: 180px;
     height: auto;
-    margin-bottom: -20px;
+    margin-bottom: -15px;
     filter: drop-shadow(4px 4px 0px #2c1f1a);
     animation: float 4s ease-in-out infinite;
   }
@@ -58,24 +68,16 @@ const goToGame = (event) => {
     height: 100%;
   }
 
-  &__form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    width: 500px;
-  }
-
   &__title {
     color: #2c1f1a;
     text-align: center;
     display: flex;
     flex-direction: column;
     line-height: 1;
-    margin-bottom: 40px;
+    margin-bottom: 25px;
 
     &-main {
-      font-size: 120px;
+      font-size: 80px;
       text-transform: uppercase;
       letter-spacing: 4px;
       text-shadow: 4px 4px 0px #7f4837;
@@ -83,8 +85,8 @@ const goToGame = (event) => {
     }
 
     &-sub {
-      font-size: 32px;
-      margin-top: 10px;
+      font-size: 24px;
+      margin-top: 5px;
       font-weight: normal;
       opacity: 0.9;
       letter-spacing: 2px;
@@ -96,25 +98,12 @@ const goToGame = (event) => {
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    width: 500px;
-  }
-
-  &__input {
-    width: 100%;
-    height: 50px;
-    border: 5px solid #9fcc3b;
-    background-color: #ddedae;
-    color: #111516;
-    font-size: 50px;
-    font-weight: bold;
-    outline: none;
-    padding: 10px;
-    font-family: inherit;
+    width: 400px;
   }
 
   &__btn {
-    width: 60%;
-    height: 100px;
+    width: 80%;
+    height: 70px;
     cursor: pointer;
     border: none;
     background: #7f4837;
@@ -122,12 +111,21 @@ const goToGame = (event) => {
     color: #d99b47;
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 50px;
+    font-size: 36px;
     font-family: inherit;
+    transition: background 0.2s ease;
+
     &:hover {
       background: #b56f44;
-      background-size: 100%;
     }
+  }
+}
+
+
+@media (min-height: 800px) {
+  .start-menu-screen__content {
+    transform: scale(1);
+    margin-bottom: 100px;
   }
 }
 
