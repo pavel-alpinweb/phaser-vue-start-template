@@ -6,6 +6,7 @@ import Preloader from "@/ui-components/Preloader.component.vue";
 import HealthBar from "@/ui-components/HealthBar.component.vue";
 import UiAnchor from "@/ui-components/UiAnchor.component.vue";
 import { usePlayer } from "@/store/player.store";
+import { useCalendarStore } from "@/store/calendar.store.js";
 import { LEVEL_WIDTH, LEVEL_HEIGHT, LEVEL_GRAVITY } from "@/configs/engine.config";
 import { PLAYER_MAX_HEALTH } from "@/configs/gameplay.config";
 import { router } from "@/router.js";
@@ -15,12 +16,13 @@ import LanguageSwitcher from "@/ui-components/LanguageSwitcher.vue";
 
 const gameContainer = ref(null);
 const playerStore = usePlayer();
+const calendarStore = useCalendarStore();
 let game = null;
 
 onMounted(() => {
   game = new Phaser.Game({
-    type: Phaser.AUTO,
-    scene: new PlatformerScene(playerStore),
+    type: Phaser.WEBGL,
+    scene: new PlatformerScene(playerStore, calendarStore),
     backgroundColor: "#a09380",
     scale: {
       width: LEVEL_WIDTH,

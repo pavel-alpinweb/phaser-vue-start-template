@@ -7,11 +7,15 @@ import { EventBus } from "@/utils/utils.js";
 import * as EventNames from "@/configs/eventNames.config.js";
 import { audioComposition } from "@/compositions/Audio.composition.js";
 import audioConfigs from "@/configs/audio.config.json";
+import timeConfig from "@/configs/time.config.json";
+import { dynamicLightingComposition } from "@/compositions/DynamicLighting.composition.js";
+import { calendarComposition } from "@/compositions/Calendar.composition.js";
 
 export class PlatformerScene extends Phaser.Scene {
-  constructor(playerStore) {
+  constructor(playerStore, calendarStore) {
     super("MainScene");
     this.playerStore = playerStore;
+    this.calendarStore = calendarStore;
   }
 
   preload() {
@@ -20,6 +24,7 @@ export class PlatformerScene extends Phaser.Scene {
     platformerComposition.preloadLevel(this);
     playerComposition.preloadPlayerAnimation(this);
     audioComposition.preloadAudioFiles(this, audioConfigs);
+    dynamicLightingComposition.preloadShaders(this);
   }
 
   create() {
@@ -30,6 +35,8 @@ export class PlatformerScene extends Phaser.Scene {
     this.backgroundFar = backgroundFar;
 
     const [map, layer, doorLayer, heartLayer, bombLayer] = platformerComposition.createLevel(this);
+
+    calendarComposition.initCalendar(this.calendarStore, timeConfig);
 
     this.userInput = playerComposition.createUserInput(this);
     playerComposition.preparePlayerAnimation(this);
@@ -56,10 +63,22 @@ export class PlatformerScene extends Phaser.Scene {
     });
 
     audioComposition.createAudioForScene(this, audioConfigs);
+
+    this.dayNightLightingPipeline = dynamicLightingComposition.prepareAmbientLightPipeline(
+      this,
+      timeConfig.morningPhaseTransitionFraction,
+      timeConfig.afternoonPhaseTransitionFraction,
+      timeConfig.eveningPhaseTransitionFraction,
+      timeConfig.nightPhaseTransitionFraction,
+      this.calendarStore.currentPhase,
+      calendarComposition.getCurrentPhaseProgress(this.calendarStore)
+    );
   }
 
   update(time, delta) {
+    calendarComposition.setCurrentTime(this.calendarStore, delta);
     playerComposition.movePlayerOnPlatformers(this.player, this.userInput);
     platformerComposition.moveParallaxImages(this.camera, this.backgroundNear, this.backgroundFar, this);
+    dynamicLightingComposition.updateAmbientLightPipeline(this.dayNightLightingPipeline, this.calendarStore.currentPhase, calendarComposition.getCurrentPhaseProgress(this.calendarStore));
   }
 }
