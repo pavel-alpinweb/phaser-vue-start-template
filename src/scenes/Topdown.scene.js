@@ -7,12 +7,16 @@ import {EventBus} from "@/utils/utils.js";
 import * as Config from "@/configs/gameplay.config.js";
 import * as EventNames from "@/configs/eventNames.config.js";
 import audioConfigs from "@/configs/audio.config.json";
+import timeConfig from "@/configs/time.config.json";
 import { audioComposition } from "@/compositions/Audio.composition.js";
+import { dynamicLightingComposition } from "@/compositions/DynamicLighting.composition.js";
+import { calendarComposition } from "@/compositions/Calendar.composition.js";
 
 export class TopdownScene extends Phaser.Scene {
-  constructor(playerStore) {
+  constructor(playerStore, calendarStore) {
     super("MainScene");
     this.playerStore = playerStore;
+    this.calendarStore = calendarStore;
   }
 
   preload() {
@@ -21,11 +25,14 @@ export class TopdownScene extends Phaser.Scene {
     backgroundComposition.preloadBackgroundImage(this);
     topdownMapComposition.preloadLevel(this);
     audioComposition.preloadAudioFiles(this, audioConfigs);
+    dynamicLightingComposition.preloadShaders(this);
   }
 
   create() {
     this.background = backgroundComposition.createBackgroundImage(this, this.cameras.main.width, this.cameras.main.height);
-    const[map, groundLayer, doorLayer, heartLayer, bombLayer] = topdownMapComposition.createLevel(this);
+    const [map, groundLayer, doorLayer, heartLayer, bombLayer] = topdownMapComposition.createLevel(this);
+
+    calendarComposition.initCalendar(this.calendarStore, timeConfig);
 
     this.userInput = playerComposition.createUserInput(this);
 
@@ -54,10 +61,22 @@ export class TopdownScene extends Phaser.Scene {
 
     audioComposition.createAudioForScene(this, audioConfigs);
     audioComposition.play(this, "mountains-sounds");
+
+    this.dayNightLightingPipeline = dynamicLightingComposition.prepareAmbientLightPipeline(
+      this,
+      timeConfig.morningPhaseTransitionFraction,
+      timeConfig.afternoonPhaseTransitionFraction,
+      timeConfig.eveningPhaseTransitionFraction,
+      timeConfig.nightPhaseTransitionFraction,
+      this.calendarStore.currentPhase,
+      calendarComposition.getCurrentPhaseProgress(this.calendarStore)
+    );
   }
 
-  update() {
+  update(time, delta) {
+    calendarComposition.setCurrentTime(this.calendarStore, delta);
     playerComposition.movePlayerOnTopDown(this.player, this.userInput);
     backgroundComposition.moveBackground(this.cameras.main, this.background);
+    dynamicLightingComposition.updateAmbientLightPipeline(this.dayNightLightingPipeline, this.calendarStore.currentPhase, calendarComposition.getCurrentPhaseProgress(this.calendarStore));
   }
 }
