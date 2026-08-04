@@ -6,6 +6,8 @@ import {topdownMapComposition} from "@/compositions/TopdownMap.composition.js";
 import {EventBus} from "@/utils/utils.js";
 import * as Config from "@/configs/gameplay.config.js";
 import * as EventNames from "@/configs/eventNames.config.js";
+import audioConfigs from "@/configs/audio.config.json";
+import { audioComposition } from "@/compositions/Audio.composition.js";
 
 export class TopdownScene extends Phaser.Scene {
   constructor(playerStore) {
@@ -18,6 +20,7 @@ export class TopdownScene extends Phaser.Scene {
     playerComposition.preloadPlayerAnimation(this);
     backgroundComposition.preloadBackgroundImage(this);
     topdownMapComposition.preloadLevel(this);
+    audioComposition.preloadAudioFiles(this, audioConfigs);
   }
 
   create() {
@@ -43,11 +46,14 @@ export class TopdownScene extends Phaser.Scene {
     this.physics.add.collider(this.player, groundLayer);
     this.physics.add.overlap(this.player, doorLayer, () => EventBus.emit(EventNames.GO_TO_PLATFORM));
     this.physics.add.collider(this.player, heartLayer, (player, heart) => {
-      playerComposition.handleHeartCollision(player, heart, this.playerStore);
+      playerComposition.handleHeartCollision(this, player, heart, this.playerStore);
     });
     this.physics.add.collider(this.player, bombLayer, (player, bomb) => {
-      playerComposition.handleBombCollision(player, bomb, this.playerStore);
+      playerComposition.handleBombCollision(this, player, bomb, this.playerStore);
     });
+
+    audioComposition.createAudioForScene(this, audioConfigs);
+    audioComposition.play(this, "mountains-sounds");
   }
 
   update() {

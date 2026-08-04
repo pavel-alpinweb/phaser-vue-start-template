@@ -5,7 +5,8 @@ import {platformerComposition} from "@/compositions/Platformer.composition.js";
 import * as Config from "@/configs/gameplay.config.js";
 import { EventBus } from "@/utils/utils.js";
 import * as EventNames from "@/configs/eventNames.config.js";
-import { GO_TO_TOPDOWN } from "@/configs/eventNames.config.js";
+import { audioComposition } from "@/compositions/Audio.composition.js";
+import audioConfigs from "@/configs/audio.config.json";
 
 export class PlatformerScene extends Phaser.Scene {
   constructor(playerStore) {
@@ -18,6 +19,7 @@ export class PlatformerScene extends Phaser.Scene {
 
     platformerComposition.preloadLevel(this);
     playerComposition.preloadPlayerAnimation(this);
+    audioComposition.preloadAudioFiles(this, audioConfigs);
   }
 
   create() {
@@ -47,11 +49,13 @@ export class PlatformerScene extends Phaser.Scene {
     this.physics.add.collider(this.player, layer);
     this.physics.add.overlap(this.player, doorLayer, () => EventBus.emit(EventNames.GO_TO_TOPDOWN));
     this.physics.add.collider(this.player, heartLayer, (player, heart) => {
-      playerComposition.handleHeartCollision(player, heart, this.playerStore);
+      playerComposition.handleHeartCollision(this, player, heart, this.playerStore);
     });
     this.physics.add.collider(this.player, bombLayer, (player, bomb) => {
-      playerComposition.handleBombCollision(player, bomb, this.playerStore);
+      playerComposition.handleBombCollision(this, player, bomb, this.playerStore);
     });
+
+    audioComposition.createAudioForScene(this, audioConfigs);
   }
 
   update(time, delta) {
