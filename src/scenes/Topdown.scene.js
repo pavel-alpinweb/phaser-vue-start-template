@@ -10,7 +10,9 @@ import audioConfigs from "@/configs/audio.config.json";
 import timeConfig from "@/configs/time.config.json";
 import { audioComposition } from "@/compositions/Audio.composition.js";
 import { dynamicLightingComposition } from "@/compositions/DynamicLighting.composition.js";
-import { calendarComposition } from "@/compositions/Calendar.composition.js";
+import {calendarComposition} from "@/compositions/Calendar.composition.js";
+import {particlesComposition} from "@/compositions/Particles.composition.js";
+import particlesConfig from "@/configs/particles.json";
 
 export class TopdownScene extends Phaser.Scene {
   constructor(playerStore, calendarStore) {
@@ -26,6 +28,7 @@ export class TopdownScene extends Phaser.Scene {
     topdownMapComposition.preloadLevel(this);
     audioComposition.preloadAudioFiles(this, audioConfigs);
     dynamicLightingComposition.preloadShaders(this);
+    particlesComposition.preloadParticlesTextures(this);
   }
 
   create() {
@@ -48,6 +51,9 @@ export class TopdownScene extends Phaser.Scene {
       Config.PLAYER_SPEED,
       Config.PLAYER_MAX_HEALTH
     );
+
+    particlesComposition.initObjectVFX(this, this.player, ["dust"], particlesConfig);
+
     playerComposition.configureCameraFollow(this, this.player, this.cameras.main.width / 4, this.cameras.main.height / 4);
 
     this.physics.add.collider(this.player, groundLayer);
