@@ -25,4 +25,15 @@ export const audioComposition = {
       sound.play();
     }
   },
+
+  stop(scene, key) {
+    const sound = scene.sound.get(key);
+    if (sound && sound.isPlaying) {
+      sound.stop();
+    }
+  },
+
+  updateGlobalVolume(scene, isPlaySound) {
+    scene.sound.mute = !isPlaySound;
+  },
 };

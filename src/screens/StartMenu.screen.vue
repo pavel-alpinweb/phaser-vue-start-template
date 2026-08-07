@@ -17,7 +17,9 @@ const goToGame = (event) => {
 
 <template>
   <div class="start-menu-screen">
-    <LanguageSwitcher />
+    <div class="start-menu-screen__controls">
+      <LanguageSwitcher />
+    </div>
     <div class="start-menu-screen__content">
       <div class="start-menu-screen__logo-container">
         <MainLogo class="start-menu-screen__logo" />
@@ -48,11 +50,18 @@ const goToGame = (event) => {
   background: #a09380 url("/public/assets/img/background/sky.png") center center;
   background-size: cover;
 
+  &__controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+  }
+
   &__content {
     display: flex;
     flex-direction: column;
     align-items: center;
     transform: scale(0.8);
+    z-index: 1;
   }
 
   &__logo-container {

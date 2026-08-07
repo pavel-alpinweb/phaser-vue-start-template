@@ -40,12 +40,7 @@ export const playerComposition = {
   },
 
   createPlayer(scene, x, y, displayWidth, displayHeight, bodyWidth, bodyHeight, speed, maxHealth) {
-    const player = scene.physics.add.sprite(x, y, "player_wait")
-      .setDisplaySize(displayWidth, displayHeight)
-      .setBodySize(bodyWidth, bodyHeight)
-      .setOrigin(0.5, 1)
-      .play("player_wait")
-      .refreshBody();
+    const player = scene.physics.add.sprite(x, y, "player_wait").setDisplaySize(displayWidth, displayHeight).setBodySize(bodyWidth, bodyHeight).setOrigin(0.5, 1).play("player_wait").refreshBody();
     player.speed = speed;
     player.depth = 100;
     player.maxHealth = maxHealth;
@@ -58,26 +53,33 @@ export const playerComposition = {
     scene.cameras.main.setDeadzone(deadzoneWidth, deadzoneHeight);
   },
 
-  movePlayerOnTopDown(player, userInput) {
+  movePlayerOnTopDown(player, userInput, scene) {
     player.body.velocity.x = userInput.right.isDown - userInput.left.isDown;
     player.body.velocity.y = userInput.down.isDown - userInput.up.isDown;
     player.body.velocity.normalize().scale(player.speed);
 
     const isMoving = !player.body.velocity.equals(Phaser.Math.Vector2.ZERO);
 
-    if (!isMoving) player.anims.play("player_wait", true);
-    else player.anims.play("player_move", true);
+    if (!isMoving) {
+      player.anims.play("player_wait", true);
+      audioComposition.stop(scene, "player-move");
+      audioComposition.play(scene, "player-wait");
+    } else {
+      player.anims.play("player_move", true);
+      audioComposition.stop(scene, "player-wait");
+      audioComposition.play(scene, "player-move");
+    }
 
     particlesComposition.setObjectVFXEmitting(player, isMoving, "dust");
 
     if (player.body.velocity.x !== 0) player.setFlipX(userInput.left.isDown);
   },
 
-      movePlayerOnPlatformers(player, userInput) {
-        if (userInput.up.isDown && player.body.blocked.down) {
-          player.body.velocity.y = -player.speed * PLAYER_JUMP_MULTIPLICATOR;
-          player.anims.play("player_jump", true);
-        }
+  movePlayerOnPlatformers(player, userInput, scene) {
+    if (userInput.up.isDown && player.body.blocked.down) {
+      player.body.velocity.y = -player.speed * PLAYER_JUMP_MULTIPLICATOR;
+      player.anims.play("player_jump", true);
+    }
 
     player.body.velocity.x = (userInput.right.isDown - userInput.left.isDown) * player.speed;
 
@@ -99,10 +101,24 @@ export const playerComposition = {
       player.body.velocity.x *= PLAYER_FALL_MULTIPLICATOR;
     }
 
+    if (isMovingOnGround) {
+      audioComposition.stop(scene, "player-wait");
+      audioComposition.stop(scene, "player-fall");
+      audioComposition.play(scene, "player-move");
+    } else if (player.body.blocked.down) {
+      audioComposition.stop(scene, "player-move");
+      audioComposition.stop(scene, "player-fall");
+      audioComposition.play(scene, "player-wait");
+    } else {
+      audioComposition.stop(scene, "player-move");
+      audioComposition.stop(scene, "player-wait");
+      audioComposition.play(scene, "player-fall");
+    }
+
     particlesComposition.setObjectVFXEmitting(player, isMovingOnGround, "dust");
 
     if (player.body.velocity.x !== 0) player.setFlipX(userInput.left.isDown);
-      },
+  },
 
   createUserInput(scene) {
     return scene.input.keyboard.addKeys({

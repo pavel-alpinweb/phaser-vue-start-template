@@ -67,6 +67,7 @@ export class TopdownScene extends Phaser.Scene {
 
     audioComposition.createAudioForScene(this, audioConfigs);
     audioComposition.play(this, "mountains-sounds");
+    audioComposition.updateGlobalVolume(this, this.playerStore.isPlaySound);
 
     this.dayNightLightingPipeline = dynamicLightingComposition.prepareAmbientLightPipeline(
       this,
@@ -81,7 +82,8 @@ export class TopdownScene extends Phaser.Scene {
 
   update(time, delta) {
     calendarComposition.setCurrentTime(this.calendarStore, delta);
-    playerComposition.movePlayerOnTopDown(this.player, this.userInput);
+    audioComposition.updateGlobalVolume(this, this.playerStore.isPlaySound);
+    playerComposition.movePlayerOnTopDown(this.player, this.userInput, this);
     backgroundComposition.moveBackground(this.cameras.main, this.background);
     dynamicLightingComposition.updateAmbientLightPipeline(this.dayNightLightingPipeline, this.calendarStore.currentPhase, calendarComposition.getCurrentPhaseProgress(this.calendarStore));
   }
