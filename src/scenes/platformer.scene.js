@@ -68,6 +68,7 @@ export class PlatformerScene extends Phaser.Scene {
     });
 
     audioComposition.createAudioForScene(this, audioConfigs);
+    audioComposition.updateGlobalVolume(this, this.playerStore.isPlaySound);
 
     this.dayNightLightingPipeline = dynamicLightingComposition.prepareAmbientLightPipeline(
       this,
@@ -82,7 +83,8 @@ export class PlatformerScene extends Phaser.Scene {
 
   update(time, delta) {
     calendarComposition.setCurrentTime(this.calendarStore, delta);
-    playerComposition.movePlayerOnPlatformers(this.player, this.userInput);
+    audioComposition.updateGlobalVolume(this, this.playerStore.isPlaySound);
+    playerComposition.movePlayerOnPlatformers(this.player, this.userInput, this);
     platformerComposition.moveParallaxImages(this.camera, this.backgroundNear, this.backgroundFar, this);
     dynamicLightingComposition.updateAmbientLightPipeline(this.dayNightLightingPipeline, this.calendarStore.currentPhase, calendarComposition.getCurrentPhaseProgress(this.calendarStore));
   }

@@ -19,9 +19,6 @@ const handleLanguageToggle = () => {
 
 <style scoped lang="scss">
 .language-switcher {
-  position: fixed;
-  top: 20px;
-  right: 20px;
   z-index: 1000;
   width: 80px;
   height: 50px;

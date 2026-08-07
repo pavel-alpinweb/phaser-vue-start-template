@@ -13,6 +13,7 @@ import { router } from "@/router.js";
 import { EventBus } from "@/utils/utils.js";
 import * as EventNames from "@/configs/eventNames.config.js";
 import LanguageSwitcher from "@/ui-components/LanguageSwitcher.vue";
+import SoundSwitcher from "@/ui-components/SoundSwitcher.vue";
 
 const gameContainer = ref(null);
 const playerStore = usePlayer();
@@ -57,7 +58,10 @@ onBeforeUnmount(() => {
   <div class="platformer-screen">
     <Preloader />
     <UiAnchor anchor="top-right" :offset-x="10" :offset-y="10" target=".platformer-screen__game-wrapper">
-      <LanguageSwitcher />
+      <div class="platformer-screen__controls">
+        <SoundSwitcher />
+        <LanguageSwitcher />
+      </div>
     </UiAnchor>
     <UiAnchor anchor="top-left" :offset-x="30" :offset-y="30" target=".platformer-screen__game-wrapper">
       <HealthBar :max-health="PLAYER_MAX_HEALTH" :current-health="playerStore.currentHealth" />
@@ -71,5 +75,11 @@ onBeforeUnmount(() => {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+
+  &__controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
 }
 </style>

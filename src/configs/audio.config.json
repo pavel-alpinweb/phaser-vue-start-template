@@ -22,5 +22,29 @@
     "volume": 0.5,
     "loop": true,
     "fadeInMs": 0
+  },
+  {
+    "key": "player-wait",
+    "filePath": "audio/idle-sound.wav",
+    "ignoreIfPlaying": true,
+    "volume": 0.5,
+    "loop": true,
+    "fadeInMs": 0
+  },
+  {
+    "key": "player-move",
+    "filePath": "audio/move-sound.wav",
+    "ignoreIfPlaying": true,
+    "volume": 0.5,
+    "loop": true,
+    "fadeInMs": 0
+  },
+  {
+    "key": "player-fall",
+    "filePath": "audio/fall-sound.wav",
+    "ignoreIfPlaying": true,
+    "volume": 0.5,
+    "loop": true,
+    "fadeInMs": 0
   }
 ]
