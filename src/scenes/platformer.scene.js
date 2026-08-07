@@ -2,6 +2,8 @@ import * as Phaser from "phaser";
 import { sceneComposition } from "@/compositions/scene.composition.js";
 import {playerComposition} from "@/compositions/Player.composition.js";
 import {platformerComposition} from "@/compositions/Platformer.composition.js";
+import { particlesComposition } from "@/compositions/Particles.composition.js";
+import particlesConfig from "@/configs/particles.json";
 import * as Config from "@/configs/gameplay.config.js";
 import { EventBus } from "@/utils/utils.js";
 import * as EventNames from "@/configs/eventNames.config.js";
@@ -25,6 +27,7 @@ export class PlatformerScene extends Phaser.Scene {
     playerComposition.preloadPlayerAnimation(this);
     audioComposition.preloadAudioFiles(this, audioConfigs);
     dynamicLightingComposition.preloadShaders(this);
+    particlesComposition.preloadParticlesTextures(this);
   }
 
   create() {
@@ -52,6 +55,8 @@ export class PlatformerScene extends Phaser.Scene {
       Config.PLAYER_MAX_HEALTH
     );
 
+    // Инициализируем пыль для игрока
+    particlesComposition.initObjectVFX(this, this.player, ["dust"], particlesConfig);
     playerComposition.configureCameraFollow(this, this.player, this.cameras.main.width / 4, this.cameras.main.height / 4);
     this.physics.add.collider(this.player, layer);
     this.physics.add.overlap(this.player, doorLayer, () => EventBus.emit(EventNames.GO_TO_TOPDOWN));

@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import { PLAYER_JUMP_MULTIPLICATOR, PLAYER_FALL_MULTIPLICATOR, HEAL_VALUE, BOMB_DAMAGE } from "@/configs/gameplay.config.js";
 import { audioComposition } from "@/compositions/Audio.composition.js";
 import * as Config from "@/configs/gameplay.config.js";
+import { particlesComposition } from "@/compositions/Particles.composition.js";
 
 export const playerComposition = {
   preloadPlayerAnimation(scene) {
@@ -62,8 +63,12 @@ export const playerComposition = {
     player.body.velocity.y = userInput.down.isDown - userInput.up.isDown;
     player.body.velocity.normalize().scale(player.speed);
 
-    if (player.body.velocity.equals(Phaser.Math.Vector2.ZERO)) player.anims.play("player_wait", true);
+    const isMoving = !player.body.velocity.equals(Phaser.Math.Vector2.ZERO);
+
+    if (!isMoving) player.anims.play("player_wait", true);
     else player.anims.play("player_move", true);
+
+    particlesComposition.setObjectVFXEmitting(player, isMoving, "dust");
 
     if (player.body.velocity.x !== 0) player.setFlipX(userInput.left.isDown);
   },
@@ -74,25 +79,29 @@ export const playerComposition = {
           player.anims.play("player_jump", true);
         }
 
-        player.body.velocity.x = (userInput.right.isDown - userInput.left.isDown) * player.speed;
+    player.body.velocity.x = (userInput.right.isDown - userInput.left.isDown) * player.speed;
 
-        const offsetX = (player.width - Config.PLAYER_PLATFORM_BODY_WIDTH) / 2;
-        if (player.body.velocity.equals(Phaser.Math.Vector2.ZERO)) {
-          player.anims.play("player_wait", true);
-          player.setOffset(offsetX, 120);
-        } else if (player.body.blocked.down && player.body.velocity.y === 0) {
-          player.anims.play("player_move", true);
-          player.setOffset(offsetX, 100);
-        } else {
-          // Если игрок в воздухе и анимация прыжка не проигрывается (завершилась), включаем падение
-          if (player.anims.currentAnim?.key !== "player_jump" || !player.anims.isPlaying) {
-            player.anims.play("player_fall", true);
-          }
-          player.setOffset(offsetX, 120);
-          player.body.velocity.x *= PLAYER_FALL_MULTIPLICATOR;
-        }
+    const isMovingOnGround = player.body.blocked.down && player.body.velocity.x !== 0;
 
-        if (player.body.velocity.x !== 0) player.setFlipX(userInput.left.isDown);
+    const offsetX = (player.width - Config.PLAYER_PLATFORM_BODY_WIDTH) / 2;
+    if (player.body.velocity.equals(Phaser.Math.Vector2.ZERO)) {
+      player.anims.play("player_wait", true);
+      player.setOffset(offsetX, 120);
+    } else if (player.body.blocked.down && player.body.velocity.y === 0) {
+      player.anims.play("player_move", true);
+      player.setOffset(offsetX, 100);
+    } else {
+      // Если игрок в воздухе и анимация прыжка не проигрывается (завершилась), включаем падение
+      if (player.anims.currentAnim?.key !== "player_jump" || !player.anims.isPlaying) {
+        player.anims.play("player_fall", true);
+      }
+      player.setOffset(offsetX, 120);
+      player.body.velocity.x *= PLAYER_FALL_MULTIPLICATOR;
+    }
+
+    particlesComposition.setObjectVFXEmitting(player, isMovingOnGround, "dust");
+
+    if (player.body.velocity.x !== 0) player.setFlipX(userInput.left.isDown);
       },
 
   createUserInput(scene) {
