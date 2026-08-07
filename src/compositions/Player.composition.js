@@ -2,7 +2,9 @@ import Phaser from "phaser";
 import { PLAYER_JUMP_MULTIPLICATOR, PLAYER_FALL_MULTIPLICATOR, HEAL_VALUE, BOMB_DAMAGE } from "@/configs/gameplay.config.js";
 import { audioComposition } from "@/compositions/Audio.composition.js";
 import * as Config from "@/configs/gameplay.config.js";
+
 import { particlesComposition } from "@/compositions/Particles.composition.js";
+import { analyticsComposition } from "@/compositions/Analytics.composition.js";
 
 export const playerComposition = {
   preloadPlayerAnimation(scene) {
@@ -134,6 +136,7 @@ export const playerComposition = {
     heart.setActive(false).setVisible(false);
     heart.body.enable = false;
     audioComposition.play(scene, "glitter");
+    analyticsComposition.log("take_heart", { currentHealth: player.currentHealth });
   },
 
   handleBombCollision(scene, player, bomb, playerStore) {
@@ -141,5 +144,6 @@ export const playerComposition = {
     bomb.setActive(false).setVisible(false);
     bomb.body.enable = false;
     audioComposition.play(scene, "explosion");
+    analyticsComposition.log("take_bomb", { currentHealth: player.currentHealth });
   },
 };

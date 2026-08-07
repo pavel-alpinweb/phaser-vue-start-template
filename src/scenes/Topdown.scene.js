@@ -8,11 +8,13 @@ import * as Config from "@/configs/gameplay.config.js";
 import * as EventNames from "@/configs/eventNames.config.js";
 import audioConfigs from "@/configs/audio.config.json";
 import timeConfig from "@/configs/time.config.json";
+import firebaseConfig from "@/configs/firebaseConfig.json";
 import { audioComposition } from "@/compositions/Audio.composition.js";
 import { dynamicLightingComposition } from "@/compositions/DynamicLighting.composition.js";
 import {calendarComposition} from "@/compositions/Calendar.composition.js";
 import {particlesComposition} from "@/compositions/Particles.composition.js";
 import particlesConfig from "@/configs/particles.json";
+import { analyticsComposition } from "@/compositions/Analytics.composition.js";
 
 export class TopdownScene extends Phaser.Scene {
   constructor(playerStore, calendarStore) {
@@ -57,7 +59,10 @@ export class TopdownScene extends Phaser.Scene {
     playerComposition.configureCameraFollow(this, this.player, this.cameras.main.width / 4, this.cameras.main.height / 4);
 
     this.physics.add.collider(this.player, groundLayer);
-    this.physics.add.overlap(this.player, doorLayer, () => EventBus.emit(EventNames.GO_TO_PLATFORM));
+    this.physics.add.overlap(this.player, doorLayer, () => {
+      EventBus.emit(EventNames.GO_TO_PLATFORM);
+      analyticsComposition.log("next_scene", { nextScene: "Platformer" });
+    });
     this.physics.add.collider(this.player, heartLayer, (player, heart) => {
       playerComposition.handleHeartCollision(this, player, heart, this.playerStore);
     });
@@ -78,6 +83,8 @@ export class TopdownScene extends Phaser.Scene {
       this.calendarStore.currentPhase,
       calendarComposition.getCurrentPhaseProgress(this.calendarStore)
     );
+
+    analyticsComposition.createAnalytics(firebaseConfig);
   }
 
   update(time, delta) {

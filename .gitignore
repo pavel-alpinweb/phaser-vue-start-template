@@ -29,3 +29,4 @@ out
 out/
 *storybook.log
 storybook-static
+src/configs/firebaseConfig.json
