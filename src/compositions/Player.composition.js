@@ -56,66 +56,24 @@ export const playerComposition = {
   },
 
   movePlayerOnTopDown(player, userInput, scene) {
-    player.body.velocity.x = userInput.right.isDown - userInput.left.isDown;
-    player.body.velocity.y = userInput.down.isDown - userInput.up.isDown;
-    player.body.velocity.normalize().scale(player.speed);
+    updatePlayerVelocity(player, userInput);
 
     const isMoving = !player.body.velocity.equals(Phaser.Math.Vector2.ZERO);
 
-    if (!isMoving) {
-      player.anims.play("player_wait", true);
-      audioComposition.stop(scene, "player-move");
-      audioComposition.play(scene, "player-wait");
-    } else {
-      player.anims.play("player_move", true);
-      audioComposition.stop(scene, "player-wait");
-      audioComposition.play(scene, "player-move");
-    }
-
+    handlePlayerTopDownState(player, scene, isMoving);
     particlesComposition.setObjectVFXEmitting(player, isMoving, "dust");
 
     if (player.body.velocity.x !== 0) player.setFlipX(userInput.left.isDown);
   },
 
   movePlayerOnPlatformers(player, userInput, scene) {
-    if (userInput.up.isDown && player.body.blocked.down) {
-      player.body.velocity.y = -player.speed * PLAYER_JUMP_MULTIPLICATOR;
-      player.anims.play("player_jump", true);
-    }
-
-    player.body.velocity.x = (userInput.right.isDown - userInput.left.isDown) * player.speed;
+    handlePlatformerJump(player, userInput);
+    handlePlatformerHorizontalMovement(player, userInput);
 
     const isMovingOnGround = player.body.blocked.down && player.body.velocity.x !== 0;
 
-    const offsetX = (player.width - Config.PLAYER_PLATFORM_BODY_WIDTH) / 2;
-    if (player.body.velocity.equals(Phaser.Math.Vector2.ZERO)) {
-      player.anims.play("player_wait", true);
-      player.setOffset(offsetX, 120);
-    } else if (player.body.blocked.down && player.body.velocity.y === 0) {
-      player.anims.play("player_move", true);
-      player.setOffset(offsetX, 100);
-    } else {
-      // Если игрок в воздухе и анимация прыжка не проигрывается (завершилась), включаем падение
-      if (player.anims.currentAnim?.key !== "player_jump" || !player.anims.isPlaying) {
-        player.anims.play("player_fall", true);
-      }
-      player.setOffset(offsetX, 120);
-      player.body.velocity.x *= PLAYER_FALL_MULTIPLICATOR;
-    }
-
-    if (isMovingOnGround) {
-      audioComposition.stop(scene, "player-wait");
-      audioComposition.stop(scene, "player-fall");
-      audioComposition.play(scene, "player-move");
-    } else if (player.body.blocked.down) {
-      audioComposition.stop(scene, "player-move");
-      audioComposition.stop(scene, "player-fall");
-      audioComposition.play(scene, "player-wait");
-    } else {
-      audioComposition.stop(scene, "player-move");
-      audioComposition.stop(scene, "player-wait");
-      audioComposition.play(scene, "player-fall");
-    }
+    handlePlatformerAnimationsAndOffset(player);
+    handlePlatformerAudio(player, scene, isMovingOnGround);
 
     particlesComposition.setObjectVFXEmitting(player, isMovingOnGround, "dust");
 
@@ -147,3 +105,66 @@ export const playerComposition = {
     analyticsComposition.log("take_bomb", { currentHealth: player.currentHealth });
   },
 };
+
+function updatePlayerVelocity(player, userInput) {
+  player.body.velocity.x = userInput.right.isDown - userInput.left.isDown;
+  player.body.velocity.y = userInput.down.isDown - userInput.up.isDown;
+  player.body.velocity.normalize().scale(player.speed);
+}
+
+function handlePlayerTopDownState(player, scene, isMoving) {
+  if (!isMoving) {
+    player.anims.play("player_wait", true);
+    audioComposition.stop(scene, "player-move");
+    audioComposition.play(scene, "player-wait");
+  } else {
+    player.anims.play("player_move", true);
+    audioComposition.stop(scene, "player-wait");
+    audioComposition.play(scene, "player-move");
+  }
+}
+
+function handlePlatformerJump(player, userInput) {
+  if (userInput.up.isDown && player.body.blocked.down) {
+    player.body.velocity.y = -player.speed * PLAYER_JUMP_MULTIPLICATOR;
+    player.anims.play("player_jump", true);
+  }
+}
+
+function handlePlatformerHorizontalMovement(player, userInput) {
+  player.body.velocity.x = (userInput.right.isDown - userInput.left.isDown) * player.speed;
+}
+
+function handlePlatformerAnimationsAndOffset(player) {
+  const offsetX = (player.width - Config.PLAYER_PLATFORM_BODY_WIDTH) / 2;
+
+  if (player.body.velocity.equals(Phaser.Math.Vector2.ZERO)) {
+    player.anims.play("player_wait", true);
+    player.setOffset(offsetX, 120);
+  } else if (player.body.blocked.down && player.body.velocity.y === 0) {
+    player.anims.play("player_move", true);
+    player.setOffset(offsetX, 100);
+  } else {
+    if (player.anims.currentAnim?.key !== "player_jump" || !player.anims.isPlaying) {
+      player.anims.play("player_fall", true);
+    }
+    player.setOffset(offsetX, 120);
+    player.body.velocity.x *= PLAYER_FALL_MULTIPLICATOR;
+  }
+}
+
+function handlePlatformerAudio(player, scene, isMovingOnGround) {
+  if (isMovingOnGround) {
+    audioComposition.stop(scene, "player-wait");
+    audioComposition.stop(scene, "player-fall");
+    audioComposition.play(scene, "player-move");
+  } else if (player.body.blocked.down) {
+    audioComposition.stop(scene, "player-move");
+    audioComposition.stop(scene, "player-fall");
+    audioComposition.play(scene, "player-wait");
+  } else {
+    audioComposition.stop(scene, "player-move");
+    audioComposition.stop(scene, "player-wait");
+    audioComposition.play(scene, "player-fall");
+  }
+}

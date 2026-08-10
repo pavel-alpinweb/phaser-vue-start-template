@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import { usePlayer } from "@/store/player.store";
 import SoundOnIcon from "/public/assets/img/icons/sound-on.svg";
 import SoundOffIcon from "/public/assets/img/icons/sound-off.svg";
 
-const playerStore = usePlayer();
+defineProps<{
+  isPlaySound: boolean;
+}>();
 
-const toggleSound = () => {
-  playerStore.isPlaySound = !playerStore.isPlaySound;
-};
+const emit = defineEmits<{
+  (e: "toggle"): void;
+}>();
 </script>
 
 <template>
-  <button class="sound-switcher" @click="toggleSound">
-    <SoundOnIcon v-if="playerStore.isPlaySound" class="sound-switcher__icon" />
+  <button class="sound-switcher" @click="emit('toggle')">
+    <SoundOnIcon v-if="isPlaySound" class="sound-switcher__icon" />
     <SoundOffIcon v-else class="sound-switcher__icon" />
   </button>
 </template>

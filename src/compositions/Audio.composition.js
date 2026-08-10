@@ -34,6 +34,8 @@ export const audioComposition = {
   },
 
   updateGlobalVolume(scene, isPlaySound) {
-    scene.sound.mute = !isPlaySound;
+    if (scene.sound.mute === isPlaySound) {
+      scene.sound.mute = !isPlaySound;
+    }
   },
 };
