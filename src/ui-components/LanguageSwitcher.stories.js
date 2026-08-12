@@ -1,9 +1,9 @@
-import LanguageSwitcher from './LanguageSwitcher.vue';
+import LanguageSwitcherComponent from './LanguageSwitcher.component.vue';
 import i18next from '@/i18n.js';
 
 export default {
   title: 'Game Widgets/LanguageSwitcher',
-  component: LanguageSwitcher,
+  component: LanguageSwitcherComponent,
   tags: ['autodocs'],
   decorators: [
     () => ({
@@ -21,14 +21,14 @@ export default {
 
 export const Default = {
   render: () => ({
-    components: { LanguageSwitcher },
+    components: { LanguageSwitcher: LanguageSwitcherComponent },
     template: '<LanguageSwitcher />',
   }),
 };
 
 export const InRussian = {
   render: () => ({
-    components: { LanguageSwitcher },
+    components: { LanguageSwitcher: LanguageSwitcherComponent },
     setup() {
       i18next.changeLanguage('ru');
     },
@@ -38,7 +38,7 @@ export const InRussian = {
 
 export const InEnglish = {
   render: () => ({
-    components: { LanguageSwitcher },
+    components: { LanguageSwitcher: LanguageSwitcherComponent },
     setup() {
       i18next.changeLanguage('en');
     },

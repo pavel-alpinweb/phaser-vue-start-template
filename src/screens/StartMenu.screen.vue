@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import LanguageSwitcher from "@/ui-components/LanguageSwitcher.vue";
+import LanguageSwitcherComponent from "@/ui-components/LanguageSwitcher.component.vue";
 import { createI18nContentHelpers } from "@/utils/utils.js";
 import i18next from "@/i18n.js";
 import { UI_LOCALIZATION } from "@/configs/uiLocalization.config.js";
@@ -18,7 +18,7 @@ const goToGame = (event) => {
 <template>
   <div class="start-menu-screen">
     <div class="start-menu-screen__controls">
-      <LanguageSwitcher />
+      <LanguageSwitcherComponent />
     </div>
     <div class="start-menu-screen__content">
       <div class="start-menu-screen__logo-container">

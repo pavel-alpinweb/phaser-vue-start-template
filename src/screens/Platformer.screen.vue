@@ -12,8 +12,8 @@ import { PLAYER_MAX_HEALTH } from "@/configs/gameplay.config";
 import { router } from "@/router.js";
 import { EventBus } from "@/utils/utils.js";
 import * as EventNames from "@/configs/eventNames.config.js";
-import LanguageSwitcher from "@/ui-components/LanguageSwitcher.vue";
-import SoundSwitcher from "@/ui-components/SoundSwitcher.vue";
+import LanguageSwitcherComponent from "@/ui-components/LanguageSwitcher.component.vue";
+import SoundSwitcherComponent from "@/ui-components/SoundSwitcher.component.vue";
 
 const gameContainer = ref(null);
 const playerStore = usePlayer();
@@ -59,8 +59,11 @@ onBeforeUnmount(() => {
     <Preloader />
     <UiAnchor anchor="top-right" :offset-x="10" :offset-y="10" target=".platformer-screen__game-wrapper">
       <div class="platformer-screen__controls">
-        <SoundSwitcher />
-        <LanguageSwitcher />
+        <SoundSwitcherComponent 
+          :is-play-sound="playerStore.isPlaySound" 
+          @toggle="playerStore.isPlaySound = !playerStore.isPlaySound" 
+        />
+        <LanguageSwitcherComponent />
       </div>
     </UiAnchor>
     <UiAnchor anchor="top-left" :offset-x="30" :offset-y="30" target=".platformer-screen__game-wrapper">
