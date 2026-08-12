@@ -44,6 +44,10 @@ export const playerComposition = {
   createPlayer(scene, x, y, displayWidth, displayHeight, bodyWidth, bodyHeight, speed, maxHealth) {
     const player = scene.physics.add.sprite(x, y, "player_wait").setDisplaySize(displayWidth, displayHeight).setBodySize(bodyWidth, bodyHeight).setOrigin(0.5, 1).play("player_wait").refreshBody();
     player.speed = speed;
+    player.aimX = x;
+    player.aimY = y;
+    player.currentDirectional = new Phaser.Math.Vector2();
+    player.rotationSpeed = 0.15;
     player.depth = 100;
     player.maxHealth = maxHealth;
     player.currentHealth = maxHealth;
@@ -103,6 +107,58 @@ export const playerComposition = {
     bomb.body.enable = false;
     audioComposition.play(scene, "explosion");
     analyticsComposition.log("take_bomb", { currentHealth: player.currentHealth });
+  },
+
+  updatePlayerAim(scene, player, pointer = scene.input.activePointer) {
+    player.aimX = pointer.worldX;
+    player.aimY = pointer.worldY;
+  },
+
+  updatePlayerAimFromPointer(scene, player, groundLayer, pointer = scene.input.activePointer) {
+    const targetTile = groundLayer.getTileAtWorldXY(pointer.worldX, pointer.worldY);
+
+    if (targetTile && (targetTile.index === 1 || targetTile.index === 2)) {
+      this.updatePlayerAim(scene, player, pointer);
+    }
+  },
+
+  movePlayerOnTopDownWithMouse(player, scene, delta = 1000 / 60) {
+    const directionToAim = new Phaser.Math.Vector2(player.aimX - player.x, player.aimY - player.y);
+    const distanceToAim = directionToAim.length();
+    const horizontalDistanceToAim = directionToAim.x;
+    const deltaInSeconds = Math.max(delta, 1) / 1000;
+
+    if (distanceToAim <= 1) {
+      player.body.setVelocity(0);
+      player.currentDirectional.set(0);
+      handlePlayerTopDownState(player, scene, false);
+      particlesComposition.setObjectVFXEmitting(player, false, "dust");
+      return;
+    }
+
+    const targetDirectional = directionToAim.normalize();
+    const slowingDistance = player.speed * 0.2;
+
+    if (player.currentDirectional.lengthSq() === 0 || distanceToAim <= slowingDistance) {
+      player.currentDirectional.copy(targetDirectional);
+    } else {
+      player.currentDirectional.x += player.rotationSpeed * (targetDirectional.x - player.currentDirectional.x);
+      player.currentDirectional.y += player.rotationSpeed * (targetDirectional.y - player.currentDirectional.y);
+      player.currentDirectional.normalize();
+    }
+
+    const velocity = Math.min(player.speed, distanceToAim / deltaInSeconds);
+    player.body.setVelocity(
+      player.currentDirectional.x * velocity,
+      player.currentDirectional.y * velocity
+    );
+    handlePlayerTopDownState(player, scene, true);
+    particlesComposition.setObjectVFXEmitting(player, true, "dust");
+
+    const horizontalFlipDeadzone = 8;
+    if (Math.abs(horizontalDistanceToAim) > horizontalFlipDeadzone) {
+      player.setFlipX(horizontalDistanceToAim < 0);
+    }
   },
 };
 

@@ -29,7 +29,7 @@ export class PlatformerScene extends Phaser.Scene {
     playerComposition.preloadPlayerAnimation(this);
     audioComposition.preloadAudioFiles(this, audioConfigs);
     dynamicLightingComposition.preloadShaders(this);
-    particlesComposition.preloadParticlesTextures(this);
+    particlesComposition.preloadParticlesTextures(this, particlesConfig);
   }
 
   create() {

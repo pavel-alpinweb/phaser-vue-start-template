@@ -1,7 +1,11 @@
 export const particlesComposition = {
-  preloadParticlesTextures(scene) {
-    scene.load.image("smoke-puff-particle", "assets/vfx/smoke-puff.png");
-    scene.load.image("fire-particle", "assets/vfx/yellow.png");
+  preloadParticlesTextures(scene, allVfxConfigs, assetOverrides = {}) {
+    for (const textureConfig of allVfxConfigs.textures ?? []) {
+      scene.load.image(
+        textureConfig.key,
+        assetOverrides[textureConfig.key] ?? textureConfig.filePath
+      );
+    }
   },
 
   /**

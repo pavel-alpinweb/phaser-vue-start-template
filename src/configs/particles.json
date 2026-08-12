@@ -1,4 +1,10 @@
 {
+  "textures": [
+    {
+      "key": "smoke-puff-particle",
+      "filePath": "assets/vfx/smoke-puff.png"
+    }
+  ],
   "VFX": {
     "dust": {
       "followOffsetYFactor": -0.6,
