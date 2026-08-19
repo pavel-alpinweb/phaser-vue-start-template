@@ -30,7 +30,7 @@ export class TopdownScene extends Phaser.Scene {
     topdownMapComposition.preloadLevel(this);
     audioComposition.preloadAudioFiles(this, audioConfigs);
     dynamicLightingComposition.preloadShaders(this);
-    particlesComposition.preloadParticlesTextures(this);
+    particlesComposition.preloadParticlesTextures(this, particlesConfig);
   }
 
   create() {
