@@ -97,6 +97,7 @@ export const playerComposition = {
 
 
   //Перемещение для Playable
+
   updatePlayerAim(scene, player, pointer = scene.input.activePointer) {
     player.aimX = pointer.worldX;
     player.aimY = pointer.worldY;
