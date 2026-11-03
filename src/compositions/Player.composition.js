@@ -59,14 +59,15 @@ export const playerComposition = {
   },
 
   movePlayerOnTopDown(player, userInput, scene) {
-    updatePlayerVelocity(player, userInput);
+    calculatePlayerVelocityByKeyboard(player, userInput);
+    calculatePlayerVelocityByMouse(scene, player);
 
     const isMoving = !player.body.velocity.equals(Phaser.Math.Vector2.ZERO);
 
     handlePlayerTopDownState(player, scene, isMoving);
     particlesComposition.setObjectVFXEmitting(player, isMoving, "dust");
 
-    if (player.body.velocity.x !== 0) player.setFlipX(userInput.left.isDown);
+    if (player.body.velocity.x !== 0) player.setFlipX(player.body.velocity.x < 0);
   },
 
   createUserInput(scene) {
@@ -94,6 +95,8 @@ export const playerComposition = {
     analyticsComposition.log("take_bomb", { currentHealth: player.currentHealth });
   },
 
+
+  //Перемещение для Playable
   updatePlayerAim(scene, player, pointer = scene.input.activePointer) {
     player.aimX = pointer.worldX;
     player.aimY = pointer.worldY;
@@ -147,7 +150,23 @@ export const playerComposition = {
   },
 };
 
-function updatePlayerVelocity(player, userInput) {
+function calculatePlayerVelocityByMouse(scene, player) {
+  const pointer = scene.input.activePointer;
+  if (!pointer.isDown || pointer.event?.target !== scene.game.canvas) return;
+
+  const aimX = pointer.x + scene.cameras.main.scrollX;
+  const aimY = pointer.y + scene.cameras.main.scrollY;
+  const distanceX = aimX - player.x;
+  const distanceY = aimY - player.y;
+
+  player.body.velocity.set(distanceX, distanceY);
+
+  const stopDistance = 5;
+  const distance = Math.hypot(distanceX, distanceY);
+  if (distance > stopDistance) player.body.velocity.set(distanceX / distance, distanceY / distance).scale(player.speed);
+}
+
+function calculatePlayerVelocityByKeyboard(player, userInput) {
   player.body.velocity.x = userInput.right.isDown - userInput.left.isDown;
   player.body.velocity.y = userInput.down.isDown - userInput.up.isDown;
   player.body.velocity.normalize().scale(player.speed);
