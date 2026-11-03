@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
-import { PLAYER_CURRENT_HEALTH } from "@/configs/gameplay.config.js";
+import * as Config from "@/configs/gameplay.json";
 
 export const usePlayer = defineStore("player", {
   state: () => ({
-    currentHealth: PLAYER_CURRENT_HEALTH,
+    currentHealth: Config.player.maxHealth,
     isPlaySound: true,
   }),
   actions: {
@@ -12,6 +12,6 @@ export const usePlayer = defineStore("player", {
     },
     decrease(value) {
       this.currentHealth = Math.max(0, this.currentHealth - value);
-    }
-  }
+    },
+  },
 });

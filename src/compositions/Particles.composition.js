@@ -12,8 +12,8 @@ export const particlesComposition = {
    * Инициализирует набор визуальных эффектов для объекта.
    * @param {Phaser.Scene} scene
    * @param {Phaser.GameObjects.GameObject} object
-   * @param {string[]} vfxKeys - массив ключей из particles.json (например, ['dust', 'fire'])
-   * @param {Object} allVfxConfigs - объект со всеми конфигами из particles.json
+   * @param {string[]} vfxKeys - массив ключей из gameplay.json (например, ['dust', 'fire'])
+   * @param {Object} allVfxConfigs - объект со всеми конфигами из gameplay.json
    */
   initObjectVFX(scene, object, vfxKeys, allVfxConfigs) {
     if (!object.__activeVFX) object.__activeVFX = {};

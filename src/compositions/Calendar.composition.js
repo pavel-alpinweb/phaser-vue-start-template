@@ -5,25 +5,33 @@ export const dayPhases = Object.freeze({
   night: "night",
 });
 
+const dayPhasesNumber = Object.freeze({
+  morning: 0,
+  afternoon: 1,
+  evening: 2,
+  night: 3,
+});
+
 export const calendarComposition = {
   initCalendar(calendarStore, timeConfig) {
-    calendarStore.morningInMs = timeConfig.morningInMs;
-    calendarStore.afternoonInMs = timeConfig.afternoonInMs;
-    calendarStore.eveningInMs = timeConfig.eveningInMs;
-    calendarStore.nightInMs = timeConfig.nightInMs;
+    calendarStore.morningInMs = timeConfig.morningInSec * 1000;
+    calendarStore.afternoonInMs = timeConfig.afternoonInSec * 1000;
+    calendarStore.eveningInMs = timeConfig.eveningInSec * 1000;
+    calendarStore.nightInMs = timeConfig.nightInSec * 1000;
 
-    calendarStore.totalElapsedTimeInMs = getDayPhaseStartOffsetInMs(calendarStore, timeConfig.startDayPhase);
-    calendarComposition.setCurrentTime(calendarStore, 0);
+    calendarStore.totalElapsedTimeInMs =
+      getElapsedMsBeforeDayPhase(calendarStore, timeConfig.startPhase) + 1 + getDayPhaseDuration(calendarStore, calendarStore.currentPhase) * timeConfig.startPhaseProgress;
+    calendarComposition.updateCurrentTime(calendarStore, 0);
   },
 
-  setCurrentTime(calendarStore, deltaTimeInMs) {
+  updateCurrentTime(calendarStore, deltaTimeInMs) {
     calendarStore.totalElapsedTimeInMs += deltaTimeInMs;
     calendarStore.msSinceDayStart = calendarStore.totalElapsedTimeInMs % getTotalDayDurationInMs(calendarStore);
     calendarStore.totalDays = Math.floor(calendarStore.totalElapsedTimeInMs / getTotalDayDurationInMs(calendarStore));
 
     if (calendarStore.msSinceDayStart <= calendarStore.morningInMs) calendarStore.currentPhase = dayPhases.morning;
-    else if (calendarStore.msSinceDayStart <= getFirstPartOfDayInMs(calendarStore)) calendarStore.currentPhase = dayPhases.afternoon;
-    else if (calendarStore.msSinceDayStart <= getDaylightHoursInMs(calendarStore)) calendarStore.currentPhase = dayPhases.evening;
+    else if (calendarStore.msSinceDayStart <= getElapsedMsBeforeDayPhase(calendarStore, dayPhases.evening)) calendarStore.currentPhase = dayPhases.afternoon;
+    else if (calendarStore.msSinceDayStart <= getElapsedMsBeforeDayPhase(calendarStore, dayPhases.night)) calendarStore.currentPhase = dayPhases.evening;
     else calendarStore.currentPhase = dayPhases.night;
   },
 
@@ -43,36 +51,38 @@ export const calendarComposition = {
     return calendarStore.currentPhase === dayPhases.night;
   },
 
-  getMsSincePhaseStart(calendarStore) {
-    if (calendarComposition.isMorning(calendarStore)) return calendarStore.msSinceDayStart;
-    else if (calendarComposition.isAfternoon(calendarStore)) return calendarStore.msSinceDayStart - calendarStore.morningInMs;
-    else if (calendarComposition.isEvening(calendarStore)) return calendarStore.msSinceDayStart - getFirstPartOfDayInMs(calendarStore);
-    else return calendarStore.msSinceDayStart - getDaylightHoursInMs(calendarStore);
+  isCurrentPhaseBetween(calendarStore, phaseStart, phaseEnd) {
+    return dayPhasesNumber[phaseStart] <= dayPhasesNumber[calendarStore.currentPhase] && dayPhasesNumber[calendarStore.currentPhase] <= dayPhasesNumber[phaseEnd];
   },
 
   getCurrentPhaseProgress(calendarStore) {
-    if (calendarComposition.isMorning(calendarStore)) return calendarComposition.getMsSincePhaseStart(calendarStore) / calendarStore.morningInMs;
-    else if (calendarComposition.isAfternoon(calendarStore)) return calendarComposition.getMsSincePhaseStart(calendarStore) / calendarStore.afternoonInMs;
-    else if (calendarComposition.isEvening(calendarStore)) return calendarComposition.getMsSincePhaseStart(calendarStore) / calendarStore.eveningInMs;
-    else return calendarComposition.getMsSincePhaseStart(calendarStore) / calendarStore.nightInMs;
+    return getMsSincePhaseStart(calendarStore) / getDayPhaseDuration(calendarStore, calendarStore.currentPhase);
+  },
+
+  getDaysSince(calendarStore, startDay) {
+    return calendarStore.totalDays - startDay;
   },
 };
 
-function getFirstPartOfDayInMs(calendarStore) {
-  return calendarStore.morningInMs + calendarStore.afternoonInMs;
-}
-
-function getDaylightHoursInMs(calendarStore) {
-  return calendarStore.morningInMs + calendarStore.afternoonInMs + calendarStore.eveningInMs;
-}
 
 function getTotalDayDurationInMs(calendarStore) {
   return calendarStore.morningInMs + calendarStore.afternoonInMs + calendarStore.eveningInMs + calendarStore.nightInMs;
 }
 
-function getDayPhaseStartOffsetInMs(calendarStore, dayPhase) {
+function getElapsedMsBeforeDayPhase(calendarStore, dayPhase) {
   if (dayPhase === dayPhases.morning) return 0;
-  else if (dayPhase === dayPhases.afternoon) return calendarStore.morningInMs + 1;
-  else if (dayPhase === dayPhases.evening) return getFirstPartOfDayInMs(calendarStore) + 1;
-  else return getDaylightHoursInMs(calendarStore) + 1;
+  else if (dayPhase === dayPhases.afternoon) return calendarStore.morningInMs;
+  else if (dayPhase === dayPhases.evening) return calendarStore.morningInMs + calendarStore.afternoonInMs;
+  else return calendarStore.morningInMs + calendarStore.afternoonInMs + calendarStore.eveningInMs;
+}
+
+function getDayPhaseDuration(calendarStore, dayPhase) {
+  if (dayPhase === dayPhases.morning) return calendarStore.morningInMs;
+  else if (dayPhase === dayPhases.afternoon) return calendarStore.afternoonInMs;
+  else if (dayPhase === dayPhases.evening) return calendarStore.eveningInMs;
+  else return calendarStore.nightInMs;
+}
+
+function getMsSincePhaseStart(calendarStore) {
+  return calendarStore.msSinceDayStart - getElapsedMsBeforeDayPhase(calendarStore, calendarStore.currentPhase);
 }

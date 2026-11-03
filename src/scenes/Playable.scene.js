@@ -3,10 +3,9 @@ import { playableComposition } from "@/compositions/Playable.composition.js";
 import { playerComposition } from "@/compositions/Player.composition.js";
 import { topdownMapComposition } from "@/compositions/TopdownMap.composition.js";
 import { audioComposition } from "@/compositions/Audio.composition.js";
-import * as Config from "@/configs/gameplay.config.js";
+import * as Config from "@/configs/gameplay.json";
 import audioPlayableConfigs from "@/configs/audioPlayable.config.json";
 import { particlesComposition } from "@/compositions/Particles.composition.js";
-import particlesConfig from "@/configs/particles.json";
 import { smoudComposition } from "@/compositions/Smoud.composition.js";
 import { sceneComposition } from "@/compositions/scene.composition.js";
 
@@ -26,15 +25,10 @@ export default class PlayableScene extends Phaser.Scene {
       this,
       playerPosition.x,
       playerPosition.y,
-      Config.PLAYER_DISPLAY_WIDTH,
-      Config.PLAYER_DISPLAY_HEIGHT,
-      Config.PLAYER_TOPDOWN_BODY_WIDTH,
-      Config.PLAYER_TOPDOWN_BODY_HEIGHT,
-      Config.PLAYER_SPEED,
-      Config.PLAYER_MAX_HEALTH
+      Config.player
     );
     playableComposition.updateHealthBar(this.player, "#health-bar");
-    particlesComposition.initObjectVFX(this, this.player, ["dust"], particlesConfig);
+    particlesComposition.initObjectVFX(this, this.player, ["dust"], Config.particles);
 
     playerComposition.configureCameraFollow(this, this.player, this.cameras.main.width / 4, this.cameras.main.height / 4);
 

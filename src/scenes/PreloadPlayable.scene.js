@@ -9,7 +9,7 @@ import playerWaitAudio from "@public/assets/audio/idle-sound.mp3";
 import playerMoveAudio from "@public/assets/audio/move-sound.mp3";
 import { particlesComposition } from "@/compositions/Particles.composition.js";
 import { smoudComposition } from "@/compositions/Smoud.composition.js";
-import particlesConfig from "@/configs/particles.json";
+import * as Config from "@/configs/gameplay.json";
 import smokePuffParticle from "@public/assets/vfx/smoke-puff.png";
 
 const audioAssets = {
@@ -34,7 +34,7 @@ export default class PreloadScenePlayable extends Phaser.Scene {
     }));
 
     audioComposition.preloadAudioFiles(this, audioConfigs);
-    particlesComposition.preloadParticlesTextures(this, particlesConfig, {
+    particlesComposition.preloadParticlesTextures(this, Config.particles, {
       "smoke-puff-particle": smokePuffParticle,
     });
   }

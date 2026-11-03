@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import { EventBus } from "@/utils/utils";
 import * as EventNames from "@/configs/eventNames.config.js";
 import { playerComposition } from "@/compositions/Player.composition.js";
+import { dynamicLightingComposition } from "@/compositions/DynamicLighting.composition.js";
 
 const resizingScenes = new WeakSet();
 
@@ -17,7 +18,7 @@ export const sceneComposition = {
   },
 
   handleResize(scene, width, height) {
-    if (resizingScenes.has(scene)) return;
+    if (!scene.cameras.main || resizingScenes.has(scene)) return;
 
     const fallbackWidth = typeof window === "undefined" ? scene.scale.parentSize.width : window.innerWidth;
     const fallbackHeight = typeof window === "undefined" ? scene.scale.parentSize.height : window.innerHeight;
@@ -50,5 +51,21 @@ export const sceneComposition = {
     } finally {
       resizingScenes.delete(scene);
     }
+  },
+
+  pause(scene, isPlaySound) {
+    if (!scene) return;
+
+    dynamicLightingComposition.pause();
+    setTimeout(() => scene.scene.pause(), 0);
+    if (isPlaySound != null) scene.playerStore.isPlaySound = isPlaySound;
+  },
+
+  resume(scene, isPlaySound) {
+    if (!scene) return;
+
+    scene.scene.resume();
+    dynamicLightingComposition.resume();
+    if (isPlaySound != null) scene.playerStore.isPlaySound = isPlaySound;
   },
 };

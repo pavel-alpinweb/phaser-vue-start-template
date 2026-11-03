@@ -1,0 +1,142 @@
+{
+  "player": {
+    "currentHeath": 20,
+    "displayHeight": 166,
+    "speed": 250,
+    "displayWidth": 144,
+    "bombDamage": 10,
+    "bodyWidth": 144,
+    "maxHealth": 20,
+    "healValue": 5,
+    "bodyHeight": 177
+  },
+  "time": {
+    "morningInSec": 5,
+    "afternoonInSec": 5,
+    "eveningInSec": 5,
+    "nightInSec": 5,
+    "startPhase": "night",
+    "startPhaseProgress": 0,
+    "morningPhaseTransitionFraction": 0.2,
+    "afternoonPhaseTransitionFraction": 0.2,
+    "eveningPhaseTransitionFraction": 0.2,
+    "nightPhaseTransitionFraction": 0.2
+  },
+  "particles": {
+    "textures": [
+      {
+        "key": "smoke-puff-particle",
+        "filePath": "assets/vfx/smoke-puff.png"
+      }
+    ],
+    "VFX": {
+      "dust": {
+        "followOffsetYFactor": -0.6,
+        "textureKey": "smoke-puff-particle",
+        "lifespan": 850,
+        "speed": {
+          "min": 14,
+          "max": 25
+        },
+        "scale": {
+          "start": 0.4,
+          "end": 2
+        },
+        "quantity": 1,
+        "gravityY": -80,
+        "particleSizePx": 35,
+        "angle": {
+          "min": 300,
+          "max": 320
+        },
+        "followOffsetX": 0.5,
+        "blendMode": "NORMAL",
+        "depthOffset": -1,
+        "rotate": {
+          "min": 0,
+          "max": 360
+        },
+        "tint": 10518624,
+        "frequency": 60,
+        "alpha": {
+          "start": 0.6,
+          "end": 0
+        }
+      }
+    }
+  },
+  "localization": {
+    "language_label": {
+      "en": "EN",
+      "ru": "RU"
+    },
+    "start_button": {
+      "en": "Start",
+      "ru": "Начать"
+    },
+    "main_title": {
+      "en": "Charlie",
+      "ru": "Чарли"
+    },
+    "main_description": {
+      "en": "HTML5 Game Toolkit",
+      "ru": "Набор инструментов для HTML5 игр"
+    },
+    "loading": {
+      "en": "Loading",
+      "ru": "Загрузка"
+    }
+  },
+  "firebase": {
+    "apiKey": "API_KEY",
+    "authDomain": "PROJECT_ID.firebaseapp.com",
+    "databaseURL": "https://PROJECT_ID.firebaseio.com",
+    "projectId": "PROJECT_ID",
+    "storageBucket": "PROJECT_ID.firebasestorage.app",
+    "messagingSenderId": "SENDER_ID",
+    "appId": "APP_ID",
+    "measurementId": "G-GA_MEASUREMENT_ID"
+  },
+  "audio": [
+    {
+      "key": "explosion",
+      "filePath": "audio/explosion.mp3",
+      "ignoreIfPlaying": false,
+      "volume": 0.5,
+      "loop": false,
+      "fadeInMs": 0
+    },
+    {
+      "key": "glitter",
+      "filePath": "audio/glitter.mp3",
+      "ignoreIfPlaying": false,
+      "volume": 0.5,
+      "loop": false,
+      "fadeInMs": 0
+    },
+    {
+      "key": "mountains-sounds",
+      "filePath": "audio/mountains-sounds.mp3",
+      "ignoreIfPlaying": true,
+      "volume": 0.5,
+      "loop": true,
+      "fadeInMs": 0
+    },
+    {
+      "key": "player-wait",
+      "filePath": "audio/idle-sound.wav",
+      "ignoreIfPlaying": true,
+      "volume": 0.5,
+      "loop": true,
+      "fadeInMs": 0
+    },
+    {
+      "key": "player-move",
+      "filePath": "audio/move-sound.wav",
+      "ignoreIfPlaying": true,
+      "volume": 0.5,
+      "loop": true,
+      "fadeInMs": 0
+    }
+  ]
+}

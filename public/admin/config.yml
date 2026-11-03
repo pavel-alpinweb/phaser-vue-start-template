@@ -60,10 +60,8 @@ collections:
           - { label: "PLAYER_SPEED", name: "PLAYER_SPEED", widget: "number" }
           - { label: "PLAYER_JUMP_MULTIPLICATOR", name: "PLAYER_JUMP_MULTIPLICATOR", widget: "number" }
           - { label: "PLAYER_FALL_MULTIPLICATOR", name: "PLAYER_FALL_MULTIPLICATOR", widget: "number" }
-          - { label: "PLAYER_PLATFORM_BODY_WIDTH", name: "PLAYER_PLATFORM_BODY_WIDTH", widget: "number" }
-          - { label: "PLAYER_PLATFORM_BODY_HEIGHT", name: "PLAYER_PLATFORM_BODY_HEIGHT", widget: "number" }
-          - { label: "PLAYER_TOPDOWN_BODY_WIDTH", name: "PLAYER_TOPDOWN_BODY_WIDTH", widget: "number" }
-          - { label: "PLAYER_TOPDOWN_BODY_HEIGHT", name: "PLAYER_TOPDOWN_BODY_HEIGHT", widget: "number" }
+          - { label: "PLAYER_BODY_WIDTH", name: "PLAYER_BODY_WIDTH", widget: "number" }
+          - { label: "PLAYER_BODY_HEIGHT", name: "PLAYER_BODY_HEIGHT", widget: "number" }
           - { label: "PLAYER_DISPLAY_WIDTH", name: "PLAYER_DISPLAY_WIDTH", widget: "number" }
           - { label: "PLAYER_DISPLAY_HEIGHT", name: "PLAYER_DISPLAY_HEIGHT", widget: "number" }
           - { label: "PLAYER_MAX_HEALTH", name: "PLAYER_MAX_HEALTH", widget: "number" }
