@@ -9,11 +9,11 @@ export const analyticsComposition = {
       const app = initializeApp(firebaseConfig);
 
       /*
-      * Если у пользователя включен блокировщик рекламы, то загрузить аналитику не получится.
-      * Если при этом использовать статический импорт, в момент отладки приложения (npm run dev)
-      * сайт просто не загрузится и вместо игры будет белый экран.
+       * Если у пользователя включен блокировщик рекламы, то загрузить аналитику не получится.
+       * Если при этом использовать статический импорт, в момент отладки приложения (npm run dev)
+       * сайт просто не загрузится и вместо игры будет белый экран.
        */
-      import("firebase/analytics")
+      return import("firebase/analytics")
         .then(({ getAnalytics, isSupported, logEvent }) => {
           // Проверяем поддержку для приватных окон и старых браузеров
           return isSupported().then((supported) => {
@@ -27,6 +27,7 @@ export const analyticsComposition = {
           console.warn("Fail to load Firebase Analytics:", error.message);
         });
     }
+    return Promise.resolve();
   },
 
   log(eventName, eventParams) {
@@ -34,5 +35,5 @@ export const analyticsComposition = {
       eventParams.debug_mode = analyticsComposition.debugMode;
       analyticsComposition.logEventFn(analyticsComposition.analytics, eventName, eventParams);
     }
-  }
+  },
 };

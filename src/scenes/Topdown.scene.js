@@ -78,7 +78,7 @@ export class TopdownScene extends Phaser.Scene {
       calendarComposition.getCurrentPhaseProgress(this.calendarStore)
     );
 
-    analyticsComposition.createAnalytics(firebaseConfig);
+    analyticsComposition.createAnalytics(firebaseConfig).then(() => analyticsComposition.log("NewGame", {}));
   }
 
   update(time, delta) {
