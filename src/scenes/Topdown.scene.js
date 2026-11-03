@@ -3,7 +3,7 @@ import {playerComposition} from "@/compositions/Player.composition.js";
 import {sceneComposition} from "@/compositions/scene.composition.js";
 import {backgroundComposition} from "@/compositions/Background.composition.js";
 import {topdownMapComposition} from "@/compositions/TopdownMap.composition.js";
-import * as Config from "@/configs/gameplay.config.js";
+import * as Config from "@/configs/gameplay.json";
 import audioConfigs from "@/configs/audio.config.json";
 import timeConfig from "@/configs/time.config.json";
 import firebaseConfig from "@/configs/firebaseConfig.json";
@@ -44,12 +44,7 @@ export class TopdownScene extends Phaser.Scene {
       this,
       this.cameras.main.width / 2,
       this.cameras.main.height / 2,
-      Config.PLAYER_DISPLAY_WIDTH,
-      Config.PLAYER_DISPLAY_HEIGHT,
-      Config.PLAYER_BODY_WIDTH,
-      Config.PLAYER_BODY_HEIGHT,
-      Config.PLAYER_SPEED,
-      Config.PLAYER_MAX_HEALTH
+      Config.player
     );
 
     particlesComposition.initObjectVFX(this, this.player, ["dust"], particlesConfig);

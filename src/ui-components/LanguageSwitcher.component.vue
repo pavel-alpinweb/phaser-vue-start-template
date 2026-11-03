@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import i18next from "@/i18n.js";
 import { createI18nContentHelpers } from "@/utils/utils.js";
-import { UI_LOCALIZATION } from "@/configs/uiLocalization.config.js";
+import UI_LOCALIZATION from "@/configs/uiLocalization.json";
 
 const { tContent, currentLanguage: rawLanguage } = createI18nContentHelpers(i18next);
 

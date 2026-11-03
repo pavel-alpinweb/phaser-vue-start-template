@@ -1,0 +1,13 @@
+{
+  "player": {
+    "currentHeath": 20,
+    "displayHeight": 166,
+    "speed": 250,
+    "displayWidth": 144,
+    "bombDamage": 10,
+    "bodyWidth": 144,
+    "maxHealth": 20,
+    "healValue": 5,
+    "bodyHeight": 177
+  }
+}

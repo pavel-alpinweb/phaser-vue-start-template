@@ -3,7 +3,7 @@ import { useRouter } from "vue-router";
 import LanguageSwitcherComponent from "@/ui-components/LanguageSwitcher.component.vue";
 import { createI18nContentHelpers } from "@/utils/utils.js";
 import i18next from "@/i18n.js";
-import { UI_LOCALIZATION } from "@/configs/uiLocalization.config.js";
+import UI_LOCALIZATION from "@/configs/uiLocalization.json";
 import MainLogo from "/public/assets/img/Logo.svg?component";
 
 const router = useRouter();
@@ -129,7 +129,6 @@ const goToGame = (event) => {
     }
   }
 }
-
 
 @media (min-height: 800px) {
   .start-menu-screen__content {

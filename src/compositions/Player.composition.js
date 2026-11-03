@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import { audioComposition } from "@/compositions/Audio.composition.js";
-import * as Config from "@/configs/gameplay.config.js";
+import * as Config from "@/configs/gameplay.json";
 
 import { particlesComposition } from "@/compositions/Particles.composition.js";
 import { analyticsComposition } from "@/compositions/Analytics.composition.js";
@@ -41,16 +41,22 @@ export const playerComposition = {
     });
   },
 
-  createPlayer(scene, x, y, displayWidth, displayHeight, bodyWidth, bodyHeight, speed, maxHealth) {
-    const player = scene.physics.add.sprite(x, y, "player_wait").setDisplaySize(displayWidth, displayHeight).setBodySize(bodyWidth, bodyHeight).setOrigin(0.5, 1).play("player_wait").refreshBody();
-    player.speed = speed;
+  createPlayer(scene, x, y, playerConfig) {
+    const player = scene.physics.add
+      .sprite(x, y, "player_wait")
+      .setDisplaySize(playerConfig.displayWidth, playerConfig.displayHeight)
+      .setBodySize(playerConfig.bodyWidth, playerConfig.bodyHeight)
+      .setOrigin(0.5, 1)
+      .play("player_wait")
+      .refreshBody();
+    player.speed = playerConfig.speed;
     player.aimX = x;
     player.aimY = y;
     player.currentDirectional = new Phaser.Math.Vector2();
     player.rotationSpeed = 0.15;
     player.depth = 100;
-    player.maxHealth = maxHealth;
-    player.currentHealth = maxHealth;
+    player.maxHealth = playerConfig.maxHealth;
+    player.currentHealth = playerConfig.maxHealth;
     player.light = dynamicLightingComposition.createLightPoint(1, 0xffaa44, 150, 0, -100);
     return player;
   },
@@ -82,7 +88,7 @@ export const playerComposition = {
   },
 
   handleHeartCollision(scene, player, heart, playerStore) {
-    playerStore.increase(Config.HEAL_VALUE, player.maxHealth);
+    playerStore.increase(Config.player.healValue, player.maxHealth);
     heart.setActive(false).setVisible(false);
     heart.body.enable = false;
     audioComposition.play(scene, "glitter");
@@ -90,7 +96,7 @@ export const playerComposition = {
   },
 
   handleBombCollision(scene, player, bomb, playerStore) {
-    playerStore.decrease(Config.BOMB_DAMAGE);
+    playerStore.decrease(Config.player.bombDamage);
     bomb.setActive(false).setVisible(false);
     bomb.body.enable = false;
     audioComposition.play(scene, "explosion");

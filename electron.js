@@ -1,18 +1,22 @@
 import { app, BrowserWindow } from 'electron';
-import { LEVEL_WIDTH, LEVEL_HEIGHT } from './src/configs/engine.config.js';
 import path from 'node:path';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const appDir = dirname(fileURLToPath(import.meta.url));
 
+const DEFAULT_WIDTH = 1365;
+const DEFAULT_HEIGHT = 768;
+
 function createWindow() {
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+
   const win = new BrowserWindow({
-    width: LEVEL_WIDTH,
-    height: LEVEL_HEIGHT,
+    width: width || DEFAULT_WIDTH,
+    height: height || DEFAULT_HEIGHT,
     webPreferences: {
-      nodeIntegration: true
-    }
+      nodeIntegration: true,
+    },
   });
   win.setMenu(null);
   win.loadFile(path.join(appDir, 'dist', 'index.html'));

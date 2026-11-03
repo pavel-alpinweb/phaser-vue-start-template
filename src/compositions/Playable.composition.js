@@ -9,7 +9,7 @@ import door from "@public/assets/levels/tiles/door.png";
 import bomb from "@public/assets/levels/tiles/bomb.png";
 import heart from "@public/assets/levels/tiles/heart.png";
 import topdownTilemap from "@public/assets/levels/tilemaps/topdown.json";
-import { BOMB_DAMAGE, HEAL_VALUE } from "@/configs/gameplay.config.js";
+import * as Config from "@/configs/gameplay.json";
 import { smoudComposition } from "@/compositions/Smoud.composition.js";
 
 export const playableComposition = {
@@ -125,7 +125,7 @@ export const playableComposition = {
   },
 
   handleHeartCollision(scene, player, heart, healthBarSelector) {
-    player.currentHealth = Math.min(player.maxHealth, player.currentHealth + HEAL_VALUE);
+    player.currentHealth = Math.min(player.maxHealth, player.currentHealth + Config.player.healValue);
     heart.setActive(false).setVisible(false);
     heart.body.enable = false;
     audioComposition.play(scene, "glitter");
@@ -136,7 +136,7 @@ export const playableComposition = {
   },
 
   handleBombCollision(scene, player, bomb, healthBarSelector) {
-    player.currentHealth = Math.max(0, player.currentHealth - BOMB_DAMAGE);
+    player.currentHealth = Math.max(0, player.currentHealth - Config.player.bombDamage);
     bomb.setActive(false).setVisible(false);
     bomb.body.enable = false;
     audioComposition.play(scene, "explosion");
