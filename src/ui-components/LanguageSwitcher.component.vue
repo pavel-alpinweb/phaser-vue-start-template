@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import i18next from "@/i18n.js";
 import { createI18nContentHelpers } from "@/utils/utils.js";
-import UI_LOCALIZATION from "@/configs/uiLocalization.json";
+import * as Config from "@/configs/gameplay.json";
 
 const { tContent, currentLanguage: rawLanguage } = createI18nContentHelpers(i18next);
 
@@ -13,7 +13,7 @@ const handleLanguageToggle = () => {
 
 <template>
   <button class="language-switcher" @click="handleLanguageToggle">
-    {{ tContent(UI_LOCALIZATION.language_label) }}
+    {{ tContent(Config.localization.language_label) }}
   </button>
 </template>
 

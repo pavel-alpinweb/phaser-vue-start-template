@@ -3,7 +3,7 @@ import { useRouter } from "vue-router";
 import LanguageSwitcherComponent from "@/ui-components/LanguageSwitcher.component.vue";
 import { createI18nContentHelpers } from "@/utils/utils.js";
 import i18next from "@/i18n.js";
-import UI_LOCALIZATION from "@/configs/uiLocalization.json";
+import * as Config from "@/configs/gameplay.json";
 import MainLogo from "/public/assets/img/Logo.svg?component";
 
 const router = useRouter();
@@ -25,12 +25,12 @@ const goToGame = (event) => {
         <MainLogo class="start-menu-screen__logo" />
       </div>
       <h1 class="start-menu-screen__title">
-        <span class="start-menu-screen__title-main">{{ tContent(UI_LOCALIZATION.main_title) }}</span>
-        <span class="start-menu-screen__title-sub">{{ tContent(UI_LOCALIZATION.main_description) }}</span>
+        <span class="start-menu-screen__title-main">{{ tContent(Config.localization.main_title) }}</span>
+        <span class="start-menu-screen__title-sub">{{ tContent(Config.localization.main_description) }}</span>
       </h1>
       <form class="start-menu-screen__form" @submit="goToGame">
         <button class="start-menu-screen__btn">
-          {{ tContent(UI_LOCALIZATION.start_button) }}
+          {{ tContent(Config.localization.start_button) }}
         </button>
       </form>
     </div>

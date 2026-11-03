@@ -6,7 +6,6 @@ import { audioComposition } from "@/compositions/Audio.composition.js";
 import * as Config from "@/configs/gameplay.json";
 import audioPlayableConfigs from "@/configs/audioPlayable.config.json";
 import { particlesComposition } from "@/compositions/Particles.composition.js";
-import particlesConfig from "@/configs/particles.json";
 import { smoudComposition } from "@/compositions/Smoud.composition.js";
 import { sceneComposition } from "@/compositions/scene.composition.js";
 
@@ -29,7 +28,7 @@ export default class PlayableScene extends Phaser.Scene {
       Config.player
     );
     playableComposition.updateHealthBar(this.player, "#health-bar");
-    particlesComposition.initObjectVFX(this, this.player, ["dust"], particlesConfig);
+    particlesComposition.initObjectVFX(this, this.player, ["dust"], Config.particles);
 
     playerComposition.configureCameraFollow(this, this.player, this.cameras.main.width / 4, this.cameras.main.height / 4);
 
