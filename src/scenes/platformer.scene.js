@@ -89,7 +89,7 @@ export class PlatformerScene extends Phaser.Scene {
   }
 
   update(time, delta) {
-    calendarComposition.setCurrentTime(this.calendarStore, delta);
+    calendarComposition.updateCurrentTime(this.calendarStore, delta);
     audioComposition.updateGlobalVolume(this, this.playerStore.isPlaySound);
     playerComposition.movePlayerOnPlatformers(this.player, this.userInput, this);
     platformerComposition.moveParallaxImages(this.camera, this.backgroundNear, this.backgroundFar, this);

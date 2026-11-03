@@ -88,7 +88,7 @@ export class TopdownScene extends Phaser.Scene {
   }
 
   update(time, delta) {
-    calendarComposition.setCurrentTime(this.calendarStore, delta);
+    calendarComposition.updateCurrentTime(this.calendarStore, delta);
     audioComposition.updateGlobalVolume(this, this.playerStore.isPlaySound);
     playerComposition.movePlayerOnTopDown(this.player, this.userInput, this);
     backgroundComposition.moveBackground(this.cameras.main, this.background);
