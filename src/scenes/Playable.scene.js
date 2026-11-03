@@ -28,8 +28,8 @@ export default class PlayableScene extends Phaser.Scene {
       playerPosition.y,
       Config.PLAYER_DISPLAY_WIDTH,
       Config.PLAYER_DISPLAY_HEIGHT,
-      Config.PLAYER_TOPDOWN_BODY_WIDTH,
-      Config.PLAYER_TOPDOWN_BODY_HEIGHT,
+      Config.PLAYER_BODY_WIDTH,
+      Config.PLAYER_BODY_HEIGHT,
       Config.PLAYER_SPEED,
       Config.PLAYER_MAX_HEALTH
     );

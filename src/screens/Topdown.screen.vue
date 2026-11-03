@@ -9,7 +9,6 @@ import { usePlayer } from "@/store/player.store";
 import { useCalendarStore } from "@/store/calendar.store.js";
 import { PLAYER_MAX_HEALTH } from "@/configs/gameplay.config";
 import { LEVEL_WIDTH, LEVEL_HEIGHT } from "@/configs/engine.config";
-import { router } from "@/router.js";
 import { EventBus } from "@/utils/utils.js";
 import * as EventNames from "@/configs/eventNames.config.js";
 import LanguageSwitcherComponent from "@/ui-components/LanguageSwitcher.component.vue";
@@ -38,12 +37,6 @@ onMounted(() => {
         debug: false,
       },
     },
-  });
-
-  EventBus.on(EventNames.GO_TO_PLATFORM, () => {
-    EventBus.off(EventNames.GO_TO_PLATFORM);
-    game?.destroy(true);
-    router.push({ path: "/platformer" });
   });
 });
 

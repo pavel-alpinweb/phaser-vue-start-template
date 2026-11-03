@@ -38,13 +38,5 @@
     "volume": 0.5,
     "loop": true,
     "fadeInMs": 0
-  },
-  {
-    "key": "player-fall",
-    "filePath": "audio/fall-sound.wav",
-    "ignoreIfPlaying": true,
-    "volume": 0.5,
-    "loop": true,
-    "fadeInMs": 0
   }
 ]
