@@ -3,7 +3,7 @@
   "afternoonInSec": 5,
   "eveningInSec": 5,
   "nightInSec": 5,
-  "startPhase": "afternoon",
+  "startPhase": "night",
   "startPhaseProgress": 0,
   "morningPhaseTransitionFraction": 0.2,
   "afternoonPhaseTransitionFraction": 0.2,

@@ -27,7 +27,7 @@ export class TopdownScene extends Phaser.Scene {
     backgroundComposition.preloadBackgroundImage(this);
     topdownMapComposition.preloadLevel(this);
     audioComposition.preloadAudioFiles(this, audioConfigs);
-    dynamicLightingComposition.preloadShaders(this);
+    dynamicLightingComposition.preloadShadersAndTextures(this);
     particlesComposition.preloadParticlesTextures(this, particlesConfig);
   }
 
@@ -70,10 +70,7 @@ export class TopdownScene extends Phaser.Scene {
 
     this.dayNightLightingPipeline = dynamicLightingComposition.prepareAmbientLightPipeline(
       this,
-      timeConfig.morningPhaseTransitionFraction,
-      timeConfig.afternoonPhaseTransitionFraction,
-      timeConfig.eveningPhaseTransitionFraction,
-      timeConfig.nightPhaseTransitionFraction,
+      timeConfig,
       this.calendarStore.currentPhase,
       calendarComposition.getCurrentPhaseProgress(this.calendarStore)
     );
@@ -86,6 +83,6 @@ export class TopdownScene extends Phaser.Scene {
     audioComposition.updateGlobalVolume(this, this.playerStore.isPlaySound);
     playerComposition.movePlayerOnTopDown(this.player, this.userInput, this);
     backgroundComposition.moveBackground(this.cameras.main, this.background);
-    dynamicLightingComposition.updateAmbientLightPipeline(this.dayNightLightingPipeline, this.calendarStore.currentPhase, calendarComposition.getCurrentPhaseProgress(this.calendarStore));
+    dynamicLightingComposition.updateLighting(this, this.dayNightLightingPipeline, this.calendarStore.currentPhase, calendarComposition.getCurrentPhaseProgress(this.calendarStore), [this.player]);
   }
 }

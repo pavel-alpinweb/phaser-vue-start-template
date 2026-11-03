@@ -4,6 +4,7 @@ import * as Config from "@/configs/gameplay.config.js";
 
 import { particlesComposition } from "@/compositions/Particles.composition.js";
 import { analyticsComposition } from "@/compositions/Analytics.composition.js";
+import { dynamicLightingComposition } from "@/compositions/DynamicLighting.composition.js";
 
 export const playerComposition = {
   preloadPlayerAnimation(scene) {
@@ -50,6 +51,7 @@ export const playerComposition = {
     player.depth = 100;
     player.maxHealth = maxHealth;
     player.currentHealth = maxHealth;
+    player.light = dynamicLightingComposition.createLightPoint(1, 0xffaa44, 150, 0, -100);
     return player;
   },
 
